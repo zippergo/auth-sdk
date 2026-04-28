@@ -1,0 +1,643 @@
+openapi: 3.1.0
+info:
+  contact: {}
+  description: "Authentication, OAuth, API keys, and partner/merchant onboarding endpoints\
+    \ exposed via the gateway."
+  license:
+    name: Proprietary
+  title: Zipper Auth API
+  version: v1
+servers:
+- description: Gateway base URL
+  url: http://localhost:8080
+tags:
+- description: Manage merchants onboarded by the authenticated partner
+  name: Partner Merchants
+- description: Manage merchant API keys for OAuth2 client credentials authentication
+  name: Merchant API Keys
+- description: OAuth2 client credentials token endpoint
+  name: OAuth2
+paths:
+  /auth/partners/merchants:
+    get:
+      description: "Returns a paginated list of all merchants onboarded by the authenticated\
+        \ partner, including their business name, email, status, and onboarding origin."
+      operationId: listPartnerMerchants
+      parameters:
+      - explode: true
+        in: query
+        name: pageable
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+        style: form
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MerchantSummary'
+          description: Merchants retrieved successfully
+        "401":
+          description: Unauthorized
+        "404":
+          description: Partner not found
+      security:
+      - bearerAuth: []
+      summary: List partner merchants
+      tags:
+      - Partner Merchants
+      x-accepts:
+      - '*/*'
+    post:
+      description: Creates and onboards a new merchant under the authenticated partner.
+        The merchant will receive an activation email to complete registration.
+      operationId: partnerOnboardMerchant
+      parameters:
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MerchantOnboardingRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PartnerOnboardingResult'
+          description: Merchant onboarded successfully
+        "400":
+          description: Invalid request body
+        "401":
+          description: Unauthorized
+        "404":
+          description: Partner not found
+      security:
+      - bearerAuth: []
+      summary: Onboard a new merchant
+      tags:
+      - Partner Merchants
+      x-content-type: application/json
+      x-accepts:
+      - '*/*'
+  /oauth/token:
+    post:
+      description: Issues a JWT access token in exchange for valid API client credentials
+        using the client_credentials grant type. Credentials must be provided via
+        HTTP Basic Authentication (Base64-encoded apiKey:apiSecret).
+      operationId: token
+      parameters:
+      - description: Basic Authentication header (Base64-encoded apiKey:apiSecret)
+        explode: false
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: OAuth2 grant type (must be 'client_credentials')
+        explode: true
+        in: query
+        name: grant_type
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+          description: Access token issued successfully
+        "400":
+          description: Unsupported grant type
+        "401":
+          description: Invalid client credentials
+        "500":
+          description: Internal server error
+      security:
+      - basicAuth: []
+      summary: Exchange client credentials for an access token
+      tags:
+      - OAuth2
+      x-accepts:
+      - '*/*'
+  /auth/merchants/api-keys:
+    get:
+      description: "Returns a summary of all API keys belonging to the authenticated\
+        \ merchant, including status and usage metadata."
+      operationId: listApiKeys
+      parameters:
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiKeySummary'
+          description: API keys retrieved successfully
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden – requires MERCHANT role with PASSWORD auth
+      security:
+      - bearerAuth: []
+      summary: List all API keys
+      tags:
+      - Merchant API Keys
+      x-accepts:
+      - '*/*'
+    post:
+      description: Generates a new API key pair (apiKey and apiSecret) for the authenticated
+        merchant. The apiSecret is only returned once at creation time and cannot
+        be retrieved later.
+      operationId: createApiKey
+      parameters:
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApiKeyRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiKeyCreatedResponse'
+          description: API key created successfully
+        "400":
+          description: Invalid request body
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden – requires MERCHANT role with PASSWORD auth
+      security:
+      - bearerAuth: []
+      summary: Create a new API key
+      tags:
+      - Merchant API Keys
+      x-content-type: application/json
+      x-accepts:
+      - '*/*'
+  /auth/partners/merchants/{merchantId}/status:
+    get:
+      description: "Returns the onboarding status of a specific merchant, including\
+        \ account status, email verification state, and creation date. The merchant\
+        \ must belong to the authenticated partner."
+      operationId: getPartnerMerchantStatus
+      parameters:
+      - description: Merchant identifier
+        explode: false
+        in: path
+        name: merchantId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MerchantOnboardingStatus'
+          description: Merchant status retrieved successfully
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden – merchant does not belong to this partner
+        "404":
+          description: Merchant not found
+      security:
+      - bearerAuth: []
+      summary: Get merchant onboarding status
+      tags:
+      - Partner Merchants
+      x-accepts:
+      - '*/*'
+  /auth/partners/merchants/by-email:
+    get:
+      description: Looks up a merchant by their email address within the authenticated
+        partner's scope. Returns the merchant summary if found and belongs to this
+        partner.
+      operationId: getPartnerMerchantByEmail
+      parameters:
+      - description: Merchant email address
+        explode: true
+        in: query
+        name: email
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MerchantSummary'
+          description: Merchant found
+        "401":
+          description: Unauthorized
+        "404":
+          description: Merchant not found for this partner
+      security:
+      - bearerAuth: []
+      summary: Get merchant by email
+      tags:
+      - Partner Merchants
+      x-accepts:
+      - '*/*'
+  /auth/merchants/api-keys/{id}:
+    delete:
+      description: Permanently revokes the specified API key. The key will no longer
+        be usable for authentication.
+      operationId: revokeApiKey
+      parameters:
+      - description: API key identifier
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: API key revoked successfully
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden – requires MERCHANT role with PASSWORD auth
+        "404":
+          description: API key not found
+      security:
+      - bearerAuth: []
+      summary: Revoke an API key
+      tags:
+      - Merchant API Keys
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    MerchantOnboardingRequest:
+      example:
+        businessEmail: businessEmail
+        firstName: firstName
+        lastName: lastName
+        address: address
+        businessName: businessName
+        businessPhone: businessPhone
+        businessType: businessType
+        requireEmailConfirmation: true
+        email: email
+      properties:
+        firstName:
+          minLength: 1
+          type: string
+        lastName:
+          minLength: 1
+          type: string
+        businessName:
+          minLength: 1
+          type: string
+        email:
+          format: email
+          minLength: 1
+          type: string
+        businessEmail:
+          type: string
+        businessPhone:
+          type: string
+        businessType:
+          type: string
+        address:
+          type: string
+        requireEmailConfirmation:
+          type: boolean
+      required:
+      - businessName
+      - email
+      - firstName
+      - lastName
+    PartnerOnboardingResult:
+      description: "Result of a partner-initiated merchant onboarding, including generated\
+        \ API credentials"
+      example:
+        apiKey: apiKey
+        merchantId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        apiSecret: apiSecret
+        message: message
+      properties:
+        merchantId:
+          description: Unique identifier of the newly onboarded merchant
+          format: uuid
+          type: string
+        apiKey:
+          description: Generated API key for the merchant
+          type: string
+        apiSecret:
+          description: Generated API secret for the merchant – only returned once
+            at creation time
+          type: string
+        message:
+          description: Human-readable status message about the onboarding result
+          type: string
+    TokenResponse:
+      example:
+        access_token: access_token
+        token_type: token_type
+        expires_in: 0
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+        expires_in:
+          format: int32
+          type: integer
+    CreateApiKeyRequest:
+      example:
+        label: label
+        scopes:
+        - scopes
+        - scopes
+      properties:
+        label:
+          type: string
+        scopes:
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+    ApiKeyCreatedResponse:
+      description: "Response returned when a new API key is created, including the\
+        \ secret shown only once"
+      example:
+        apiKey: apiKey
+        apiSecret: apiSecret
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        label: label
+        scopes:
+        - scopes
+        - scopes
+      properties:
+        id:
+          description: Unique identifier of the API key
+          format: uuid
+          type: string
+        apiKey:
+          description: The API key value used as the client ID
+          type: string
+        apiSecret:
+          description: The API secret – only returned once at creation time and cannot
+            be retrieved later
+          type: string
+        label:
+          description: Human-readable label for identifying this API key
+          type: string
+        scopes:
+          description: Set of permission scopes granted to this API key
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+    Pageable:
+      properties:
+        page:
+          format: int32
+          minimum: 0
+          type: integer
+        size:
+          format: int32
+          minimum: 1
+          type: integer
+        sort:
+          items:
+            type: string
+          type: array
+    MerchantSummary:
+      description: "Summary view of a merchant including business info, status, and\
+        \ onboarding origin"
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        origin: SELF
+        businessName: businessName
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        partnerId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        email: email
+        status: PENDING_ACTIVATION
+      properties:
+        id:
+          description: Unique identifier of the merchant
+          format: uuid
+          type: string
+        businessName:
+          description: Registered business name of the merchant
+          type: string
+        email:
+          description: Email address associated with the merchant account
+          type: string
+        status:
+          description: Current account status of the merchant
+          enum:
+          - PENDING_ACTIVATION
+          - PENDING_PASSWORD_SETUP
+          - ACTIVE
+          - SUSPENDED
+          type: string
+        origin:
+          description: "How the merchant was onboarded (e.g. SELF, PARTNER)"
+          enum:
+          - SELF
+          - PARTNER_API
+          - ADMIN
+          type: string
+        partnerId:
+          description: "Identifier of the partner that onboarded this merchant, if\
+            \ any"
+          format: uuid
+          type: string
+        createdAt:
+          description: Timestamp when the merchant was created
+          format: date-time
+          type: string
+    MerchantOnboardingStatus:
+      description: Current onboarding status of a merchant including verification
+        state
+      example:
+        emailVerified: true
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        merchantId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        status: PENDING_ACTIVATION
+      properties:
+        merchantId:
+          description: Unique identifier of the merchant
+          format: uuid
+          type: string
+        status:
+          description: Current account status of the merchant
+          enum:
+          - PENDING_ACTIVATION
+          - PENDING_PASSWORD_SETUP
+          - ACTIVE
+          - SUSPENDED
+          type: string
+        emailVerified:
+          description: Whether the merchant's email address has been verified
+          type: boolean
+        createdAt:
+          description: Timestamp when the merchant was created
+          format: date-time
+          type: string
+    ApiKeySummary:
+      description: Summary of an API key including status and usage metadata
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        lastUsedAt: 2000-01-23T04:56:07.000+00:00
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        apiKeyPrefix: apiKeyPrefix
+        label: label
+        scopes:
+        - scopes
+        - scopes
+        status: ACTIVE
+      properties:
+        id:
+          description: Unique identifier of the API key
+          format: uuid
+          type: string
+        apiKeyPrefix:
+          description: First few characters of the API key for identification
+          type: string
+        label:
+          description: Human-readable label for identifying this API key
+          type: string
+        scopes:
+          description: Set of permission scopes granted to this API key
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+        status:
+          description: "Current status of the API key (e.g. ACTIVE, REVOKED)"
+          enum:
+          - ACTIVE
+          - REVOKED
+          type: string
+        createdAt:
+          description: Timestamp when the API key was created
+          format: date-time
+          type: string
+        lastUsedAt:
+          description: Timestamp when the API key was last used for authentication
+          format: date-time
+          type: string
+  securitySchemes:
+    basicAuth:
+      scheme: basic
+      type: http
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+

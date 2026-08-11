@@ -1,29 +1,25 @@
 
 
-# MerchantOnboardingRequest
+# MerchantUpdateRequest
 
+Editable merchant profile fields; null fields are left unchanged
 
 ## Properties
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-|**firstName** | **String** |  |  |
-|**lastName** | **String** |  |  |
-|**businessName** | **String** |  |  |
 |**nameHe** | **String** |  |  [optional] |
 |**nameEn** | **String** |  |  [optional] |
-|**email** | **String** |  |  |
+|**businessName** | **String** |  |  [optional] |
 |**businessEmail** | **String** |  |  [optional] |
 |**businessPhone** | **String** |  |  [optional] |
 |**businessType** | [**BusinessTypeEnum**](#BusinessTypeEnum) |  |  [optional] |
-|**address** | **String** |  |  [optional] |
 |**addressHe** | **String** |  |  [optional] |
 |**addressEn** | **String** |  |  [optional] |
 |**cityHe** | **String** |  |  [optional] |
 |**cityEn** | **String** |  |  [optional] |
 |**lat** | **Double** |  |  [optional] |
 |**lng** | **Double** |  |  [optional] |
-|**requireEmailConfirmation** | **Boolean** |  |  [optional] |
 
 
 

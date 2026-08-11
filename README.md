@@ -123,11 +123,22 @@ Class | Method | HTTP request | Description
 *MerchantApiKeysApi* | [**createApiKey**](docs/MerchantApiKeysApi.md#createApiKey) | **POST** /auth/merchants/api-keys | Create a new API key
 *MerchantApiKeysApi* | [**listApiKeys**](docs/MerchantApiKeysApi.md#listApiKeys) | **GET** /auth/merchants/api-keys | List all API keys
 *MerchantApiKeysApi* | [**revokeApiKey**](docs/MerchantApiKeysApi.md#revokeApiKey) | **DELETE** /auth/merchants/api-keys/{id} | Revoke an API key
+*OAuth2Api* | [**introspect**](docs/OAuth2Api.md#introspect) | **POST** /oauth/introspect | Introspect an access token
 *OAuth2Api* | [**token**](docs/OAuth2Api.md#token) | **POST** /oauth/token | Exchange client credentials for an access token
+*PartnerMerchantsApi* | [**activatePartnerMerchant**](docs/PartnerMerchantsApi.md#activatePartnerMerchant) | **POST** /auth/partners/merchants/{merchantId}/activate | Activate merchant
+*PartnerMerchantsApi* | [**bulkSetPartnerMerchantStatus**](docs/PartnerMerchantsApi.md#bulkSetPartnerMerchantStatus) | **POST** /auth/partners/merchants/bulk/status | Bulk merchant status change
+*PartnerMerchantsApi* | [**getPartnerMerchant**](docs/PartnerMerchantsApi.md#getPartnerMerchant) | **GET** /auth/partners/merchants/{merchantId} | Get merchant detail
 *PartnerMerchantsApi* | [**getPartnerMerchantByEmail**](docs/PartnerMerchantsApi.md#getPartnerMerchantByEmail) | **GET** /auth/partners/merchants/by-email | Get merchant by email
+*PartnerMerchantsApi* | [**getPartnerMerchantDeliveries**](docs/PartnerMerchantsApi.md#getPartnerMerchantDeliveries) | **GET** /auth/partners/merchants/{merchantId}/deliveries | List a merchant&#39;s deliveries
+*PartnerMerchantsApi* | [**getPartnerMerchantEarnings**](docs/PartnerMerchantsApi.md#getPartnerMerchantEarnings) | **GET** /auth/partners/merchants/{merchantId}/earnings | List a merchant&#39;s earnings
+*PartnerMerchantsApi* | [**getPartnerMerchantEarningsSummary**](docs/PartnerMerchantsApi.md#getPartnerMerchantEarningsSummary) | **GET** /auth/partners/merchants/{merchantId}/earnings/summary | Merchant earnings totals
+*PartnerMerchantsApi* | [**getPartnerMerchantStats**](docs/PartnerMerchantsApi.md#getPartnerMerchantStats) | **GET** /auth/partners/merchants/stats | Get active-merchant statistics
 *PartnerMerchantsApi* | [**getPartnerMerchantStatus**](docs/PartnerMerchantsApi.md#getPartnerMerchantStatus) | **GET** /auth/partners/merchants/{merchantId}/status | Get merchant onboarding status
 *PartnerMerchantsApi* | [**listPartnerMerchants**](docs/PartnerMerchantsApi.md#listPartnerMerchants) | **GET** /auth/partners/merchants | List partner merchants
 *PartnerMerchantsApi* | [**partnerOnboardMerchant**](docs/PartnerMerchantsApi.md#partnerOnboardMerchant) | **POST** /auth/partners/merchants | Onboard a new merchant
+*PartnerMerchantsApi* | [**searchPartnerMerchants**](docs/PartnerMerchantsApi.md#searchPartnerMerchants) | **POST** /auth/partners/merchants/search | Search partner merchants
+*PartnerMerchantsApi* | [**suspendPartnerMerchant**](docs/PartnerMerchantsApi.md#suspendPartnerMerchant) | **POST** /auth/partners/merchants/{merchantId}/suspend | Suspend merchant
+*PartnerMerchantsApi* | [**updatePartnerMerchant**](docs/PartnerMerchantsApi.md#updatePartnerMerchant) | **PUT** /auth/partners/merchants/{merchantId} | Update merchant profile
 
 
 ## Documentation for Models
@@ -135,11 +146,28 @@ Class | Method | HTTP request | Description
  - [ApiKeyCreatedResponse](docs/ApiKeyCreatedResponse.md)
  - [ApiKeySummary](docs/ApiKeySummary.md)
  - [CreateApiKeyRequest](docs/CreateApiKeyRequest.md)
+ - [Filter](docs/Filter.md)
+ - [IntrospectionResponse](docs/IntrospectionResponse.md)
+ - [MerchantBulkStatusRequest](docs/MerchantBulkStatusRequest.md)
+ - [MerchantBulkStatusResult](docs/MerchantBulkStatusResult.md)
+ - [MerchantDeliveryRow](docs/MerchantDeliveryRow.md)
+ - [MerchantDetail](docs/MerchantDetail.md)
+ - [MerchantEarningRow](docs/MerchantEarningRow.md)
+ - [MerchantEarningsSummary](docs/MerchantEarningsSummary.md)
  - [MerchantOnboardingRequest](docs/MerchantOnboardingRequest.md)
  - [MerchantOnboardingStatus](docs/MerchantOnboardingStatus.md)
+ - [MerchantStats](docs/MerchantStats.md)
  - [MerchantSummary](docs/MerchantSummary.md)
+ - [MerchantUpdateRequest](docs/MerchantUpdateRequest.md)
+ - [PageResponseListMerchantDeliveryRow](docs/PageResponseListMerchantDeliveryRow.md)
+ - [PageResponseListMerchantEarningRow](docs/PageResponseListMerchantEarningRow.md)
+ - [PageResponseListMerchantSummary](docs/PageResponseListMerchantSummary.md)
  - [Pageable](docs/Pageable.md)
+ - [Pagination](docs/Pagination.md)
  - [PartnerOnboardingResult](docs/PartnerOnboardingResult.md)
+ - [Point](docs/Point.md)
+ - [SearchMerchantsRequest](docs/SearchMerchantsRequest.md)
+ - [SortField](docs/SortField.md)
  - [TokenResponse](docs/TokenResponse.md)
 
 

@@ -27,6 +27,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import com.zipper.auth.sdk.model.IntrospectionResponse;
 import com.zipper.auth.sdk.model.TokenResponse;
 
 import java.lang.reflect.Type;
@@ -72,6 +73,166 @@ public class OAuth2Api {
         this.localCustomBaseUrl = customBaseUrl;
     }
 
+    /**
+     * Build call for introspect
+     * @param token Token to introspect (required)
+     * @param authorization Basic Authentication header (Base64-encoded apiKey:apiSecret). Required unless application.security.introspection.require-caller-auth is false. (optional)
+     * @param tokenTypeHint Token type hint (unused; kept for RFC 7662 compatibility) (optional)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Introspection result </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Caller credentials missing or invalid </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call introspectCall(@javax.annotation.Nonnull String token, @javax.annotation.Nullable String authorization, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/oauth/introspect";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (token != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("token", token));
+        }
+
+        if (tokenTypeHint != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("token_type_hint", tokenTypeHint));
+        }
+
+        final String[] localVarAccepts = {
+            "*/*"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        if (authorization != null) {
+            localVarHeaderParams.put("Authorization", localVarApiClient.parameterToString(authorization));
+        }
+
+
+        if (acceptLanguage != null) {
+            localVarHeaderParams.put("Accept-Language", localVarApiClient.parameterToString(acceptLanguage));
+        }
+
+
+        String[] localVarAuthNames = new String[] { "basicAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call introspectValidateBeforeCall(@javax.annotation.Nonnull String token, @javax.annotation.Nullable String authorization, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'token' is set
+        if (token == null) {
+            throw new ApiException("Missing the required parameter 'token' when calling introspect(Async)");
+        }
+
+        return introspectCall(token, authorization, tokenTypeHint, acceptLanguage, _callback);
+
+    }
+
+    /**
+     * Introspect an access token
+     * Returns whether the supplied token is currently active. Implements RFC 7662. Caller must authenticate with HTTP Basic using API client credentials (Base64-encoded apiKey:apiSecret).
+     * @param token Token to introspect (required)
+     * @param authorization Basic Authentication header (Base64-encoded apiKey:apiSecret). Required unless application.security.introspection.require-caller-auth is false. (optional)
+     * @param tokenTypeHint Token type hint (unused; kept for RFC 7662 compatibility) (optional)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return IntrospectionResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Introspection result </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Caller credentials missing or invalid </td><td>  -  </td></tr>
+     </table>
+     */
+    public IntrospectionResponse introspect(@javax.annotation.Nonnull String token, @javax.annotation.Nullable String authorization, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        ApiResponse<IntrospectionResponse> localVarResp = introspectWithHttpInfo(token, authorization, tokenTypeHint, acceptLanguage);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Introspect an access token
+     * Returns whether the supplied token is currently active. Implements RFC 7662. Caller must authenticate with HTTP Basic using API client credentials (Base64-encoded apiKey:apiSecret).
+     * @param token Token to introspect (required)
+     * @param authorization Basic Authentication header (Base64-encoded apiKey:apiSecret). Required unless application.security.introspection.require-caller-auth is false. (optional)
+     * @param tokenTypeHint Token type hint (unused; kept for RFC 7662 compatibility) (optional)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return ApiResponse&lt;IntrospectionResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Introspection result </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Caller credentials missing or invalid </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<IntrospectionResponse> introspectWithHttpInfo(@javax.annotation.Nonnull String token, @javax.annotation.Nullable String authorization, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        okhttp3.Call localVarCall = introspectValidateBeforeCall(token, authorization, tokenTypeHint, acceptLanguage, null);
+        Type localVarReturnType = new TypeToken<IntrospectionResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Introspect an access token (asynchronously)
+     * Returns whether the supplied token is currently active. Implements RFC 7662. Caller must authenticate with HTTP Basic using API client credentials (Base64-encoded apiKey:apiSecret).
+     * @param token Token to introspect (required)
+     * @param authorization Basic Authentication header (Base64-encoded apiKey:apiSecret). Required unless application.security.introspection.require-caller-auth is false. (optional)
+     * @param tokenTypeHint Token type hint (unused; kept for RFC 7662 compatibility) (optional)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Introspection result </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Caller credentials missing or invalid </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call introspectAsync(@javax.annotation.Nonnull String token, @javax.annotation.Nullable String authorization, @javax.annotation.Nullable String tokenTypeHint, @javax.annotation.Nullable String acceptLanguage, final ApiCallback<IntrospectionResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = introspectValidateBeforeCall(token, authorization, tokenTypeHint, acceptLanguage, _callback);
+        Type localVarReturnType = new TypeToken<IntrospectionResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
     /**
      * Build call for token
      * @param authorization Basic Authentication header (Base64-encoded apiKey:apiSecret) (required)

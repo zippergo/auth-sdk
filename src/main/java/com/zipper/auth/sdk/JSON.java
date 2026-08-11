@@ -99,11 +99,28 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.ApiKeyCreatedResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.ApiKeySummary.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.CreateApiKeyRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.Filter.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.IntrospectionResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantBulkStatusRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantBulkStatusResult.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantDeliveryRow.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantDetail.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantEarningRow.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantEarningsSummary.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantOnboardingRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantOnboardingStatus.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantStats.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantSummary.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantUpdateRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.PageResponseListMerchantDeliveryRow.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.PageResponseListMerchantEarningRow.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.PageResponseListMerchantSummary.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.Pageable.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.Pagination.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.PartnerOnboardingResult.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.Point.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.SearchMerchantsRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.SortField.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.TokenResponse.CustomTypeAdapterFactory());
         gson = gsonBuilder.create();
     }

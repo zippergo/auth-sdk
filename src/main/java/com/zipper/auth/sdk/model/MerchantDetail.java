@@ -48,19 +48,14 @@ import java.util.Set;
 import com.zipper.auth.sdk.JSON;
 
 /**
- * Summary view of a merchant including business info, status, and onboarding origin
+ * Full merchant profile for the detail view
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.13.0")
-public class MerchantSummary {
+public class MerchantDetail {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
   @javax.annotation.Nullable
   private UUID id;
-
-  public static final String SERIALIZED_NAME_BUSINESS_NAME = "businessName";
-  @SerializedName(SERIALIZED_NAME_BUSINESS_NAME)
-  @javax.annotation.Nullable
-  private String businessName;
 
   public static final String SERIALIZED_NAME_NAME_HE = "nameHe";
   @SerializedName(SERIALIZED_NAME_NAME_HE)
@@ -72,6 +67,11 @@ public class MerchantSummary {
   @javax.annotation.Nullable
   private String nameEn;
 
+  public static final String SERIALIZED_NAME_BUSINESS_NAME = "businessName";
+  @SerializedName(SERIALIZED_NAME_BUSINESS_NAME)
+  @javax.annotation.Nullable
+  private String businessName;
+
   public static final String SERIALIZED_NAME_OWNER_HE = "ownerHe";
   @SerializedName(SERIALIZED_NAME_OWNER_HE)
   @javax.annotation.Nullable
@@ -81,6 +81,21 @@ public class MerchantSummary {
   @SerializedName(SERIALIZED_NAME_OWNER_EN)
   @javax.annotation.Nullable
   private String ownerEn;
+
+  public static final String SERIALIZED_NAME_EMAIL = "email";
+  @SerializedName(SERIALIZED_NAME_EMAIL)
+  @javax.annotation.Nullable
+  private String email;
+
+  public static final String SERIALIZED_NAME_BUSINESS_EMAIL = "businessEmail";
+  @SerializedName(SERIALIZED_NAME_BUSINESS_EMAIL)
+  @javax.annotation.Nullable
+  private String businessEmail;
+
+  public static final String SERIALIZED_NAME_BUSINESS_PHONE = "businessPhone";
+  @SerializedName(SERIALIZED_NAME_BUSINESS_PHONE)
+  @javax.annotation.Nullable
+  private String businessPhone;
 
   /**
    * Business category
@@ -139,13 +154,8 @@ public class MerchantSummary {
   @javax.annotation.Nullable
   private BusinessTypeEnum businessType;
 
-  public static final String SERIALIZED_NAME_EMAIL = "email";
-  @SerializedName(SERIALIZED_NAME_EMAIL)
-  @javax.annotation.Nullable
-  private String email;
-
   /**
-   * Current account status of the merchant
+   * Account status (active/suspended/pending derived client-side)
    */
   @JsonAdapter(StatusEnum.Adapter.class)
   public enum StatusEnum {
@@ -206,7 +216,7 @@ public class MerchantSummary {
   private StatusEnum status;
 
   /**
-   * How the merchant was onboarded (e.g. SELF, PARTNER)
+   * How the merchant was onboarded
    */
   @JsonAdapter(OriginEnum.Adapter.class)
   public enum OriginEnum {
@@ -281,15 +291,50 @@ public class MerchantSummary {
   @javax.annotation.Nullable
   private UUID referrerUserId;
 
+  public static final String SERIALIZED_NAME_ADDRESS_HE = "addressHe";
+  @SerializedName(SERIALIZED_NAME_ADDRESS_HE)
+  @javax.annotation.Nullable
+  private String addressHe;
+
+  public static final String SERIALIZED_NAME_ADDRESS_EN = "addressEn";
+  @SerializedName(SERIALIZED_NAME_ADDRESS_EN)
+  @javax.annotation.Nullable
+  private String addressEn;
+
+  public static final String SERIALIZED_NAME_CITY_HE = "cityHe";
+  @SerializedName(SERIALIZED_NAME_CITY_HE)
+  @javax.annotation.Nullable
+  private String cityHe;
+
+  public static final String SERIALIZED_NAME_CITY_EN = "cityEn";
+  @SerializedName(SERIALIZED_NAME_CITY_EN)
+  @javax.annotation.Nullable
+  private String cityEn;
+
+  public static final String SERIALIZED_NAME_LAT = "lat";
+  @SerializedName(SERIALIZED_NAME_LAT)
+  @javax.annotation.Nullable
+  private Double lat;
+
+  public static final String SERIALIZED_NAME_LNG = "lng";
+  @SerializedName(SERIALIZED_NAME_LNG)
+  @javax.annotation.Nullable
+  private Double lng;
+
   public static final String SERIALIZED_NAME_CREATED_AT = "createdAt";
   @SerializedName(SERIALIZED_NAME_CREATED_AT)
   @javax.annotation.Nullable
   private OffsetDateTime createdAt;
 
-  public MerchantSummary() {
+  public static final String SERIALIZED_NAME_LAST_MODIFIED_AT = "lastModifiedAt";
+  @SerializedName(SERIALIZED_NAME_LAST_MODIFIED_AT)
+  @javax.annotation.Nullable
+  private OffsetDateTime lastModifiedAt;
+
+  public MerchantDetail() {
   }
 
-  public MerchantSummary id(@javax.annotation.Nullable UUID id) {
+  public MerchantDetail id(@javax.annotation.Nullable UUID id) {
     this.id = id;
     return this;
   }
@@ -308,26 +353,7 @@ public class MerchantSummary {
   }
 
 
-  public MerchantSummary businessName(@javax.annotation.Nullable String businessName) {
-    this.businessName = businessName;
-    return this;
-  }
-
-  /**
-   * Registered business name of the merchant
-   * @return businessName
-   */
-  @javax.annotation.Nullable
-  public String getBusinessName() {
-    return businessName;
-  }
-
-  public void setBusinessName(@javax.annotation.Nullable String businessName) {
-    this.businessName = businessName;
-  }
-
-
-  public MerchantSummary nameHe(@javax.annotation.Nullable String nameHe) {
+  public MerchantDetail nameHe(@javax.annotation.Nullable String nameHe) {
     this.nameHe = nameHe;
     return this;
   }
@@ -346,7 +372,7 @@ public class MerchantSummary {
   }
 
 
-  public MerchantSummary nameEn(@javax.annotation.Nullable String nameEn) {
+  public MerchantDetail nameEn(@javax.annotation.Nullable String nameEn) {
     this.nameEn = nameEn;
     return this;
   }
@@ -365,7 +391,26 @@ public class MerchantSummary {
   }
 
 
-  public MerchantSummary ownerHe(@javax.annotation.Nullable String ownerHe) {
+  public MerchantDetail businessName(@javax.annotation.Nullable String businessName) {
+    this.businessName = businessName;
+    return this;
+  }
+
+  /**
+   * Legacy/canonical business name
+   * @return businessName
+   */
+  @javax.annotation.Nullable
+  public String getBusinessName() {
+    return businessName;
+  }
+
+  public void setBusinessName(@javax.annotation.Nullable String businessName) {
+    this.businessName = businessName;
+  }
+
+
+  public MerchantDetail ownerHe(@javax.annotation.Nullable String ownerHe) {
     this.ownerHe = ownerHe;
     return this;
   }
@@ -384,7 +429,7 @@ public class MerchantSummary {
   }
 
 
-  public MerchantSummary ownerEn(@javax.annotation.Nullable String ownerEn) {
+  public MerchantDetail ownerEn(@javax.annotation.Nullable String ownerEn) {
     this.ownerEn = ownerEn;
     return this;
   }
@@ -403,7 +448,64 @@ public class MerchantSummary {
   }
 
 
-  public MerchantSummary businessType(@javax.annotation.Nullable BusinessTypeEnum businessType) {
+  public MerchantDetail email(@javax.annotation.Nullable String email) {
+    this.email = email;
+    return this;
+  }
+
+  /**
+   * Owner account email
+   * @return email
+   */
+  @javax.annotation.Nullable
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(@javax.annotation.Nullable String email) {
+    this.email = email;
+  }
+
+
+  public MerchantDetail businessEmail(@javax.annotation.Nullable String businessEmail) {
+    this.businessEmail = businessEmail;
+    return this;
+  }
+
+  /**
+   * Public-facing business email
+   * @return businessEmail
+   */
+  @javax.annotation.Nullable
+  public String getBusinessEmail() {
+    return businessEmail;
+  }
+
+  public void setBusinessEmail(@javax.annotation.Nullable String businessEmail) {
+    this.businessEmail = businessEmail;
+  }
+
+
+  public MerchantDetail businessPhone(@javax.annotation.Nullable String businessPhone) {
+    this.businessPhone = businessPhone;
+    return this;
+  }
+
+  /**
+   * Business phone
+   * @return businessPhone
+   */
+  @javax.annotation.Nullable
+  public String getBusinessPhone() {
+    return businessPhone;
+  }
+
+  public void setBusinessPhone(@javax.annotation.Nullable String businessPhone) {
+    this.businessPhone = businessPhone;
+  }
+
+
+  public MerchantDetail businessType(@javax.annotation.Nullable BusinessTypeEnum businessType) {
     this.businessType = businessType;
     return this;
   }
@@ -422,32 +524,13 @@ public class MerchantSummary {
   }
 
 
-  public MerchantSummary email(@javax.annotation.Nullable String email) {
-    this.email = email;
-    return this;
-  }
-
-  /**
-   * Email address associated with the merchant account
-   * @return email
-   */
-  @javax.annotation.Nullable
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(@javax.annotation.Nullable String email) {
-    this.email = email;
-  }
-
-
-  public MerchantSummary status(@javax.annotation.Nullable StatusEnum status) {
+  public MerchantDetail status(@javax.annotation.Nullable StatusEnum status) {
     this.status = status;
     return this;
   }
 
   /**
-   * Current account status of the merchant
+   * Account status (active/suspended/pending derived client-side)
    * @return status
    */
   @javax.annotation.Nullable
@@ -460,13 +543,13 @@ public class MerchantSummary {
   }
 
 
-  public MerchantSummary origin(@javax.annotation.Nullable OriginEnum origin) {
+  public MerchantDetail origin(@javax.annotation.Nullable OriginEnum origin) {
     this.origin = origin;
     return this;
   }
 
   /**
-   * How the merchant was onboarded (e.g. SELF, PARTNER)
+   * How the merchant was onboarded
    * @return origin
    */
   @javax.annotation.Nullable
@@ -479,13 +562,13 @@ public class MerchantSummary {
   }
 
 
-  public MerchantSummary partnerId(@javax.annotation.Nullable UUID partnerId) {
+  public MerchantDetail partnerId(@javax.annotation.Nullable UUID partnerId) {
     this.partnerId = partnerId;
     return this;
   }
 
   /**
-   * Identifier of the partner that onboarded this merchant, if any
+   * Owning partner id, if any
    * @return partnerId
    */
   @javax.annotation.Nullable
@@ -498,13 +581,13 @@ public class MerchantSummary {
   }
 
 
-  public MerchantSummary referralCode(@javax.annotation.Nullable String referralCode) {
+  public MerchantDetail referralCode(@javax.annotation.Nullable String referralCode) {
     this.referralCode = referralCode;
     return this;
   }
 
   /**
-   * Referral code generated for this merchant
+   * Merchant referral code
    * @return referralCode
    */
   @javax.annotation.Nullable
@@ -517,13 +600,13 @@ public class MerchantSummary {
   }
 
 
-  public MerchantSummary referrerUserId(@javax.annotation.Nullable UUID referrerUserId) {
+  public MerchantDetail referrerUserId(@javax.annotation.Nullable UUID referrerUserId) {
     this.referrerUserId = referrerUserId;
     return this;
   }
 
   /**
-   * User id of the referrer (partner&#39;s user id) when onboarded by a partner
+   * Referrer (partner) user id, if any
    * @return referrerUserId
    */
   @javax.annotation.Nullable
@@ -536,13 +619,127 @@ public class MerchantSummary {
   }
 
 
-  public MerchantSummary createdAt(@javax.annotation.Nullable OffsetDateTime createdAt) {
+  public MerchantDetail addressHe(@javax.annotation.Nullable String addressHe) {
+    this.addressHe = addressHe;
+    return this;
+  }
+
+  /**
+   * Hebrew address line
+   * @return addressHe
+   */
+  @javax.annotation.Nullable
+  public String getAddressHe() {
+    return addressHe;
+  }
+
+  public void setAddressHe(@javax.annotation.Nullable String addressHe) {
+    this.addressHe = addressHe;
+  }
+
+
+  public MerchantDetail addressEn(@javax.annotation.Nullable String addressEn) {
+    this.addressEn = addressEn;
+    return this;
+  }
+
+  /**
+   * English address line
+   * @return addressEn
+   */
+  @javax.annotation.Nullable
+  public String getAddressEn() {
+    return addressEn;
+  }
+
+  public void setAddressEn(@javax.annotation.Nullable String addressEn) {
+    this.addressEn = addressEn;
+  }
+
+
+  public MerchantDetail cityHe(@javax.annotation.Nullable String cityHe) {
+    this.cityHe = cityHe;
+    return this;
+  }
+
+  /**
+   * Hebrew city
+   * @return cityHe
+   */
+  @javax.annotation.Nullable
+  public String getCityHe() {
+    return cityHe;
+  }
+
+  public void setCityHe(@javax.annotation.Nullable String cityHe) {
+    this.cityHe = cityHe;
+  }
+
+
+  public MerchantDetail cityEn(@javax.annotation.Nullable String cityEn) {
+    this.cityEn = cityEn;
+    return this;
+  }
+
+  /**
+   * English city
+   * @return cityEn
+   */
+  @javax.annotation.Nullable
+  public String getCityEn() {
+    return cityEn;
+  }
+
+  public void setCityEn(@javax.annotation.Nullable String cityEn) {
+    this.cityEn = cityEn;
+  }
+
+
+  public MerchantDetail lat(@javax.annotation.Nullable Double lat) {
+    this.lat = lat;
+    return this;
+  }
+
+  /**
+   * Latitude
+   * @return lat
+   */
+  @javax.annotation.Nullable
+  public Double getLat() {
+    return lat;
+  }
+
+  public void setLat(@javax.annotation.Nullable Double lat) {
+    this.lat = lat;
+  }
+
+
+  public MerchantDetail lng(@javax.annotation.Nullable Double lng) {
+    this.lng = lng;
+    return this;
+  }
+
+  /**
+   * Longitude
+   * @return lng
+   */
+  @javax.annotation.Nullable
+  public Double getLng() {
+    return lng;
+  }
+
+  public void setLng(@javax.annotation.Nullable Double lng) {
+    this.lng = lng;
+  }
+
+
+  public MerchantDetail createdAt(@javax.annotation.Nullable OffsetDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
 
   /**
-   * Timestamp when the merchant was created
+   * Creation timestamp
    * @return createdAt
    */
   @javax.annotation.Nullable
@@ -555,6 +752,25 @@ public class MerchantSummary {
   }
 
 
+  public MerchantDetail lastModifiedAt(@javax.annotation.Nullable OffsetDateTime lastModifiedAt) {
+    this.lastModifiedAt = lastModifiedAt;
+    return this;
+  }
+
+  /**
+   * Last modification timestamp
+   * @return lastModifiedAt
+   */
+  @javax.annotation.Nullable
+  public OffsetDateTime getLastModifiedAt() {
+    return lastModifiedAt;
+  }
+
+  public void setLastModifiedAt(@javax.annotation.Nullable OffsetDateTime lastModifiedAt) {
+    this.lastModifiedAt = lastModifiedAt;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -564,46 +780,64 @@ public class MerchantSummary {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MerchantSummary merchantSummary = (MerchantSummary) o;
-    return Objects.equals(this.id, merchantSummary.id) &&
-        Objects.equals(this.businessName, merchantSummary.businessName) &&
-        Objects.equals(this.nameHe, merchantSummary.nameHe) &&
-        Objects.equals(this.nameEn, merchantSummary.nameEn) &&
-        Objects.equals(this.ownerHe, merchantSummary.ownerHe) &&
-        Objects.equals(this.ownerEn, merchantSummary.ownerEn) &&
-        Objects.equals(this.businessType, merchantSummary.businessType) &&
-        Objects.equals(this.email, merchantSummary.email) &&
-        Objects.equals(this.status, merchantSummary.status) &&
-        Objects.equals(this.origin, merchantSummary.origin) &&
-        Objects.equals(this.partnerId, merchantSummary.partnerId) &&
-        Objects.equals(this.referralCode, merchantSummary.referralCode) &&
-        Objects.equals(this.referrerUserId, merchantSummary.referrerUserId) &&
-        Objects.equals(this.createdAt, merchantSummary.createdAt);
+    MerchantDetail merchantDetail = (MerchantDetail) o;
+    return Objects.equals(this.id, merchantDetail.id) &&
+        Objects.equals(this.nameHe, merchantDetail.nameHe) &&
+        Objects.equals(this.nameEn, merchantDetail.nameEn) &&
+        Objects.equals(this.businessName, merchantDetail.businessName) &&
+        Objects.equals(this.ownerHe, merchantDetail.ownerHe) &&
+        Objects.equals(this.ownerEn, merchantDetail.ownerEn) &&
+        Objects.equals(this.email, merchantDetail.email) &&
+        Objects.equals(this.businessEmail, merchantDetail.businessEmail) &&
+        Objects.equals(this.businessPhone, merchantDetail.businessPhone) &&
+        Objects.equals(this.businessType, merchantDetail.businessType) &&
+        Objects.equals(this.status, merchantDetail.status) &&
+        Objects.equals(this.origin, merchantDetail.origin) &&
+        Objects.equals(this.partnerId, merchantDetail.partnerId) &&
+        Objects.equals(this.referralCode, merchantDetail.referralCode) &&
+        Objects.equals(this.referrerUserId, merchantDetail.referrerUserId) &&
+        Objects.equals(this.addressHe, merchantDetail.addressHe) &&
+        Objects.equals(this.addressEn, merchantDetail.addressEn) &&
+        Objects.equals(this.cityHe, merchantDetail.cityHe) &&
+        Objects.equals(this.cityEn, merchantDetail.cityEn) &&
+        Objects.equals(this.lat, merchantDetail.lat) &&
+        Objects.equals(this.lng, merchantDetail.lng) &&
+        Objects.equals(this.createdAt, merchantDetail.createdAt) &&
+        Objects.equals(this.lastModifiedAt, merchantDetail.lastModifiedAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, businessName, nameHe, nameEn, ownerHe, ownerEn, businessType, email, status, origin, partnerId, referralCode, referrerUserId, createdAt);
+    return Objects.hash(id, nameHe, nameEn, businessName, ownerHe, ownerEn, email, businessEmail, businessPhone, businessType, status, origin, partnerId, referralCode, referrerUserId, addressHe, addressEn, cityHe, cityEn, lat, lng, createdAt, lastModifiedAt);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class MerchantSummary {\n");
+    sb.append("class MerchantDetail {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    businessName: ").append(toIndentedString(businessName)).append("\n");
     sb.append("    nameHe: ").append(toIndentedString(nameHe)).append("\n");
     sb.append("    nameEn: ").append(toIndentedString(nameEn)).append("\n");
+    sb.append("    businessName: ").append(toIndentedString(businessName)).append("\n");
     sb.append("    ownerHe: ").append(toIndentedString(ownerHe)).append("\n");
     sb.append("    ownerEn: ").append(toIndentedString(ownerEn)).append("\n");
-    sb.append("    businessType: ").append(toIndentedString(businessType)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
+    sb.append("    businessEmail: ").append(toIndentedString(businessEmail)).append("\n");
+    sb.append("    businessPhone: ").append(toIndentedString(businessPhone)).append("\n");
+    sb.append("    businessType: ").append(toIndentedString(businessType)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    origin: ").append(toIndentedString(origin)).append("\n");
     sb.append("    partnerId: ").append(toIndentedString(partnerId)).append("\n");
     sb.append("    referralCode: ").append(toIndentedString(referralCode)).append("\n");
     sb.append("    referrerUserId: ").append(toIndentedString(referrerUserId)).append("\n");
+    sb.append("    addressHe: ").append(toIndentedString(addressHe)).append("\n");
+    sb.append("    addressEn: ").append(toIndentedString(addressEn)).append("\n");
+    sb.append("    cityHe: ").append(toIndentedString(cityHe)).append("\n");
+    sb.append("    cityEn: ").append(toIndentedString(cityEn)).append("\n");
+    sb.append("    lat: ").append(toIndentedString(lat)).append("\n");
+    sb.append("    lng: ").append(toIndentedString(lng)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
+    sb.append("    lastModifiedAt: ").append(toIndentedString(lastModifiedAt)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -627,19 +861,28 @@ public class MerchantSummary {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("id");
-    openapiFields.add("businessName");
     openapiFields.add("nameHe");
     openapiFields.add("nameEn");
+    openapiFields.add("businessName");
     openapiFields.add("ownerHe");
     openapiFields.add("ownerEn");
-    openapiFields.add("businessType");
     openapiFields.add("email");
+    openapiFields.add("businessEmail");
+    openapiFields.add("businessPhone");
+    openapiFields.add("businessType");
     openapiFields.add("status");
     openapiFields.add("origin");
     openapiFields.add("partnerId");
     openapiFields.add("referralCode");
     openapiFields.add("referrerUserId");
+    openapiFields.add("addressHe");
+    openapiFields.add("addressEn");
+    openapiFields.add("cityHe");
+    openapiFields.add("cityEn");
+    openapiFields.add("lat");
+    openapiFields.add("lng");
     openapiFields.add("createdAt");
+    openapiFields.add("lastModifiedAt");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -649,28 +892,25 @@ public class MerchantSummary {
    * Validates the JSON Element and throws an exception if issues found
    *
    * @param jsonElement JSON Element
-   * @throws IOException if the JSON Element is invalid with respect to MerchantSummary
+   * @throws IOException if the JSON Element is invalid with respect to MerchantDetail
    */
   public static void validateJsonElement(JsonElement jsonElement) throws IOException {
       if (jsonElement == null) {
-        if (!MerchantSummary.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in MerchantSummary is not found in the empty JSON string", MerchantSummary.openapiRequiredFields.toString()));
+        if (!MerchantDetail.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in MerchantDetail is not found in the empty JSON string", MerchantDetail.openapiRequiredFields.toString()));
         }
       }
 
       Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
       for (Map.Entry<String, JsonElement> entry : entries) {
-        if (!MerchantSummary.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `MerchantSummary` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
+        if (!MerchantDetail.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `MerchantDetail` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("id") != null && !jsonObj.get("id").isJsonNull()) && !jsonObj.get("id").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("id").toString()));
-      }
-      if ((jsonObj.get("businessName") != null && !jsonObj.get("businessName").isJsonNull()) && !jsonObj.get("businessName").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `businessName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("businessName").toString()));
       }
       if ((jsonObj.get("nameHe") != null && !jsonObj.get("nameHe").isJsonNull()) && !jsonObj.get("nameHe").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `nameHe` to be a primitive type in the JSON string but got `%s`", jsonObj.get("nameHe").toString()));
@@ -678,11 +918,23 @@ public class MerchantSummary {
       if ((jsonObj.get("nameEn") != null && !jsonObj.get("nameEn").isJsonNull()) && !jsonObj.get("nameEn").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `nameEn` to be a primitive type in the JSON string but got `%s`", jsonObj.get("nameEn").toString()));
       }
+      if ((jsonObj.get("businessName") != null && !jsonObj.get("businessName").isJsonNull()) && !jsonObj.get("businessName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `businessName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("businessName").toString()));
+      }
       if ((jsonObj.get("ownerHe") != null && !jsonObj.get("ownerHe").isJsonNull()) && !jsonObj.get("ownerHe").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ownerHe` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ownerHe").toString()));
       }
       if ((jsonObj.get("ownerEn") != null && !jsonObj.get("ownerEn").isJsonNull()) && !jsonObj.get("ownerEn").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ownerEn` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ownerEn").toString()));
+      }
+      if ((jsonObj.get("email") != null && !jsonObj.get("email").isJsonNull()) && !jsonObj.get("email").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `email` to be a primitive type in the JSON string but got `%s`", jsonObj.get("email").toString()));
+      }
+      if ((jsonObj.get("businessEmail") != null && !jsonObj.get("businessEmail").isJsonNull()) && !jsonObj.get("businessEmail").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `businessEmail` to be a primitive type in the JSON string but got `%s`", jsonObj.get("businessEmail").toString()));
+      }
+      if ((jsonObj.get("businessPhone") != null && !jsonObj.get("businessPhone").isJsonNull()) && !jsonObj.get("businessPhone").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `businessPhone` to be a primitive type in the JSON string but got `%s`", jsonObj.get("businessPhone").toString()));
       }
       if ((jsonObj.get("businessType") != null && !jsonObj.get("businessType").isJsonNull()) && !jsonObj.get("businessType").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `businessType` to be a primitive type in the JSON string but got `%s`", jsonObj.get("businessType").toString()));
@@ -690,9 +942,6 @@ public class MerchantSummary {
       // validate the optional field `businessType`
       if (jsonObj.get("businessType") != null && !jsonObj.get("businessType").isJsonNull()) {
         BusinessTypeEnum.validateJsonElement(jsonObj.get("businessType"));
-      }
-      if ((jsonObj.get("email") != null && !jsonObj.get("email").isJsonNull()) && !jsonObj.get("email").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `email` to be a primitive type in the JSON string but got `%s`", jsonObj.get("email").toString()));
       }
       if ((jsonObj.get("status") != null && !jsonObj.get("status").isJsonNull()) && !jsonObj.get("status").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `status` to be a primitive type in the JSON string but got `%s`", jsonObj.get("status").toString()));
@@ -717,28 +966,40 @@ public class MerchantSummary {
       if ((jsonObj.get("referrerUserId") != null && !jsonObj.get("referrerUserId").isJsonNull()) && !jsonObj.get("referrerUserId").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `referrerUserId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("referrerUserId").toString()));
       }
+      if ((jsonObj.get("addressHe") != null && !jsonObj.get("addressHe").isJsonNull()) && !jsonObj.get("addressHe").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `addressHe` to be a primitive type in the JSON string but got `%s`", jsonObj.get("addressHe").toString()));
+      }
+      if ((jsonObj.get("addressEn") != null && !jsonObj.get("addressEn").isJsonNull()) && !jsonObj.get("addressEn").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `addressEn` to be a primitive type in the JSON string but got `%s`", jsonObj.get("addressEn").toString()));
+      }
+      if ((jsonObj.get("cityHe") != null && !jsonObj.get("cityHe").isJsonNull()) && !jsonObj.get("cityHe").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `cityHe` to be a primitive type in the JSON string but got `%s`", jsonObj.get("cityHe").toString()));
+      }
+      if ((jsonObj.get("cityEn") != null && !jsonObj.get("cityEn").isJsonNull()) && !jsonObj.get("cityEn").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `cityEn` to be a primitive type in the JSON string but got `%s`", jsonObj.get("cityEn").toString()));
+      }
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!MerchantSummary.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'MerchantSummary' and its subtypes
+       if (!MerchantDetail.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'MerchantDetail' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<MerchantSummary> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(MerchantSummary.class));
+       final TypeAdapter<MerchantDetail> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(MerchantDetail.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<MerchantSummary>() {
+       return (TypeAdapter<T>) new TypeAdapter<MerchantDetail>() {
            @Override
-           public void write(JsonWriter out, MerchantSummary value) throws IOException {
+           public void write(JsonWriter out, MerchantDetail value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              elementAdapter.write(out, obj);
            }
 
            @Override
-           public MerchantSummary read(JsonReader in) throws IOException {
+           public MerchantDetail read(JsonReader in) throws IOException {
              JsonElement jsonElement = elementAdapter.read(in);
              validateJsonElement(jsonElement);
              return thisAdapter.fromJsonTree(jsonElement);
@@ -749,18 +1010,18 @@ public class MerchantSummary {
   }
 
   /**
-   * Create an instance of MerchantSummary given an JSON string
+   * Create an instance of MerchantDetail given an JSON string
    *
    * @param jsonString JSON string
-   * @return An instance of MerchantSummary
-   * @throws IOException if the JSON string is invalid with respect to MerchantSummary
+   * @return An instance of MerchantDetail
+   * @throws IOException if the JSON string is invalid with respect to MerchantDetail
    */
-  public static MerchantSummary fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, MerchantSummary.class);
+  public static MerchantDetail fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, MerchantDetail.class);
   }
 
   /**
-   * Convert an instance of MerchantSummary to an JSON string
+   * Convert an instance of MerchantDetail to an JSON string
    *
    * @return JSON string
    */

@@ -27,11 +27,21 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import com.zipper.auth.sdk.model.MerchantBulkStatusRequest;
+import com.zipper.auth.sdk.model.MerchantBulkStatusResult;
+import com.zipper.auth.sdk.model.MerchantDetail;
+import com.zipper.auth.sdk.model.MerchantEarningsSummary;
 import com.zipper.auth.sdk.model.MerchantOnboardingRequest;
 import com.zipper.auth.sdk.model.MerchantOnboardingStatus;
+import com.zipper.auth.sdk.model.MerchantStats;
 import com.zipper.auth.sdk.model.MerchantSummary;
+import com.zipper.auth.sdk.model.MerchantUpdateRequest;
+import com.zipper.auth.sdk.model.PageResponseListMerchantDeliveryRow;
+import com.zipper.auth.sdk.model.PageResponseListMerchantEarningRow;
+import com.zipper.auth.sdk.model.PageResponseListMerchantSummary;
 import com.zipper.auth.sdk.model.Pageable;
 import com.zipper.auth.sdk.model.PartnerOnboardingResult;
+import com.zipper.auth.sdk.model.SearchMerchantsRequest;
 import java.util.UUID;
 
 import java.lang.reflect.Type;
@@ -77,6 +87,414 @@ public class PartnerMerchantsApi {
         this.localCustomBaseUrl = customBaseUrl;
     }
 
+    /**
+     * Build call for activatePartnerMerchant
+     * @param merchantId  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call activatePartnerMerchantCall(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/auth/partners/merchants/{merchantId}/activate"
+            .replace("{" + "merchantId" + "}", localVarApiClient.escapeString(merchantId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "*/*"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        if (acceptLanguage != null) {
+            localVarHeaderParams.put("Accept-Language", localVarApiClient.parameterToString(acceptLanguage));
+        }
+
+
+        String[] localVarAuthNames = new String[] { "bearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call activatePartnerMerchantValidateBeforeCall(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'merchantId' is set
+        if (merchantId == null) {
+            throw new ApiException("Missing the required parameter 'merchantId' when calling activatePartnerMerchant(Async)");
+        }
+
+        return activatePartnerMerchantCall(merchantId, acceptLanguage, _callback);
+
+    }
+
+    /**
+     * Activate merchant
+     * Sets the merchant&#39;s account status to ACTIVE. Partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return MerchantDetail
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public MerchantDetail activatePartnerMerchant(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        ApiResponse<MerchantDetail> localVarResp = activatePartnerMerchantWithHttpInfo(merchantId, acceptLanguage);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Activate merchant
+     * Sets the merchant&#39;s account status to ACTIVE. Partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return ApiResponse&lt;MerchantDetail&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<MerchantDetail> activatePartnerMerchantWithHttpInfo(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        okhttp3.Call localVarCall = activatePartnerMerchantValidateBeforeCall(merchantId, acceptLanguage, null);
+        Type localVarReturnType = new TypeToken<MerchantDetail>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Activate merchant (asynchronously)
+     * Sets the merchant&#39;s account status to ACTIVE. Partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call activatePartnerMerchantAsync(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage, final ApiCallback<MerchantDetail> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = activatePartnerMerchantValidateBeforeCall(merchantId, acceptLanguage, _callback);
+        Type localVarReturnType = new TypeToken<MerchantDetail>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for bulkSetPartnerMerchantStatus
+     * @param merchantBulkStatusRequest  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call bulkSetPartnerMerchantStatusCall(@javax.annotation.Nonnull MerchantBulkStatusRequest merchantBulkStatusRequest, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = merchantBulkStatusRequest;
+
+        // create path and map variables
+        String localVarPath = "/auth/partners/merchants/bulk/status";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "*/*"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        if (acceptLanguage != null) {
+            localVarHeaderParams.put("Accept-Language", localVarApiClient.parameterToString(acceptLanguage));
+        }
+
+
+        String[] localVarAuthNames = new String[] { "bearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call bulkSetPartnerMerchantStatusValidateBeforeCall(@javax.annotation.Nonnull MerchantBulkStatusRequest merchantBulkStatusRequest, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'merchantBulkStatusRequest' is set
+        if (merchantBulkStatusRequest == null) {
+            throw new ApiException("Missing the required parameter 'merchantBulkStatusRequest' when calling bulkSetPartnerMerchantStatus(Async)");
+        }
+
+        return bulkSetPartnerMerchantStatusCall(merchantBulkStatusRequest, acceptLanguage, _callback);
+
+    }
+
+    /**
+     * Bulk merchant status change
+     * Applies an activate/suspend action to a set of the partner&#39;s merchants. Ids not owned by the partner are silently skipped.
+     * @param merchantBulkStatusRequest  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return MerchantBulkStatusResult
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public MerchantBulkStatusResult bulkSetPartnerMerchantStatus(@javax.annotation.Nonnull MerchantBulkStatusRequest merchantBulkStatusRequest, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        ApiResponse<MerchantBulkStatusResult> localVarResp = bulkSetPartnerMerchantStatusWithHttpInfo(merchantBulkStatusRequest, acceptLanguage);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Bulk merchant status change
+     * Applies an activate/suspend action to a set of the partner&#39;s merchants. Ids not owned by the partner are silently skipped.
+     * @param merchantBulkStatusRequest  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return ApiResponse&lt;MerchantBulkStatusResult&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<MerchantBulkStatusResult> bulkSetPartnerMerchantStatusWithHttpInfo(@javax.annotation.Nonnull MerchantBulkStatusRequest merchantBulkStatusRequest, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        okhttp3.Call localVarCall = bulkSetPartnerMerchantStatusValidateBeforeCall(merchantBulkStatusRequest, acceptLanguage, null);
+        Type localVarReturnType = new TypeToken<MerchantBulkStatusResult>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Bulk merchant status change (asynchronously)
+     * Applies an activate/suspend action to a set of the partner&#39;s merchants. Ids not owned by the partner are silently skipped.
+     * @param merchantBulkStatusRequest  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call bulkSetPartnerMerchantStatusAsync(@javax.annotation.Nonnull MerchantBulkStatusRequest merchantBulkStatusRequest, @javax.annotation.Nullable String acceptLanguage, final ApiCallback<MerchantBulkStatusResult> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = bulkSetPartnerMerchantStatusValidateBeforeCall(merchantBulkStatusRequest, acceptLanguage, _callback);
+        Type localVarReturnType = new TypeToken<MerchantBulkStatusResult>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for getPartnerMerchant
+     * @param merchantId  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getPartnerMerchantCall(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/auth/partners/merchants/{merchantId}"
+            .replace("{" + "merchantId" + "}", localVarApiClient.escapeString(merchantId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "*/*"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        if (acceptLanguage != null) {
+            localVarHeaderParams.put("Accept-Language", localVarApiClient.parameterToString(acceptLanguage));
+        }
+
+
+        String[] localVarAuthNames = new String[] { "bearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call getPartnerMerchantValidateBeforeCall(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'merchantId' is set
+        if (merchantId == null) {
+            throw new ApiException("Missing the required parameter 'merchantId' when calling getPartnerMerchant(Async)");
+        }
+
+        return getPartnerMerchantCall(merchantId, acceptLanguage, _callback);
+
+    }
+
+    /**
+     * Get merchant detail
+     * Returns the full profile of one of the authenticated partner&#39;s merchants. Returns 404 if the merchant does not belong to this partner.
+     * @param merchantId  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return MerchantDetail
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public MerchantDetail getPartnerMerchant(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        ApiResponse<MerchantDetail> localVarResp = getPartnerMerchantWithHttpInfo(merchantId, acceptLanguage);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Get merchant detail
+     * Returns the full profile of one of the authenticated partner&#39;s merchants. Returns 404 if the merchant does not belong to this partner.
+     * @param merchantId  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return ApiResponse&lt;MerchantDetail&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<MerchantDetail> getPartnerMerchantWithHttpInfo(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        okhttp3.Call localVarCall = getPartnerMerchantValidateBeforeCall(merchantId, acceptLanguage, null);
+        Type localVarReturnType = new TypeToken<MerchantDetail>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Get merchant detail (asynchronously)
+     * Returns the full profile of one of the authenticated partner&#39;s merchants. Returns 404 if the merchant does not belong to this partner.
+     * @param merchantId  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getPartnerMerchantAsync(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage, final ApiCallback<MerchantDetail> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = getPartnerMerchantValidateBeforeCall(merchantId, acceptLanguage, _callback);
+        Type localVarReturnType = new TypeToken<MerchantDetail>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
     /**
      * Build call for getPartnerMerchantByEmail
      * @param email Merchant email address (required)
@@ -221,6 +639,588 @@ public class PartnerMerchantsApi {
 
         okhttp3.Call localVarCall = getPartnerMerchantByEmailValidateBeforeCall(email, acceptLanguage, _callback);
         Type localVarReturnType = new TypeToken<MerchantSummary>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for getPartnerMerchantDeliveries
+     * @param merchantId  (required)
+     * @param page  (optional, default to 1)
+     * @param size  (optional, default to 20)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getPartnerMerchantDeliveriesCall(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer size, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/auth/partners/merchants/{merchantId}/deliveries"
+            .replace("{" + "merchantId" + "}", localVarApiClient.escapeString(merchantId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (page != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("page", page));
+        }
+
+        if (size != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("size", size));
+        }
+
+        final String[] localVarAccepts = {
+            "*/*"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        if (acceptLanguage != null) {
+            localVarHeaderParams.put("Accept-Language", localVarApiClient.parameterToString(acceptLanguage));
+        }
+
+
+        String[] localVarAuthNames = new String[] { "bearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call getPartnerMerchantDeliveriesValidateBeforeCall(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer size, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'merchantId' is set
+        if (merchantId == null) {
+            throw new ApiException("Missing the required parameter 'merchantId' when calling getPartnerMerchantDeliveries(Async)");
+        }
+
+        return getPartnerMerchantDeliveriesCall(merchantId, page, size, acceptLanguage, _callback);
+
+    }
+
+    /**
+     * List a merchant&#39;s deliveries
+     * Returns a page of the merchant&#39;s deliveries (newest first) for the detail-page Deliveries tab. Proxied to delivery-hub with a service token; partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param page  (optional, default to 1)
+     * @param size  (optional, default to 20)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return PageResponseListMerchantDeliveryRow
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public PageResponseListMerchantDeliveryRow getPartnerMerchantDeliveries(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer size, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        ApiResponse<PageResponseListMerchantDeliveryRow> localVarResp = getPartnerMerchantDeliveriesWithHttpInfo(merchantId, page, size, acceptLanguage);
+        return localVarResp.getData();
+    }
+
+    /**
+     * List a merchant&#39;s deliveries
+     * Returns a page of the merchant&#39;s deliveries (newest first) for the detail-page Deliveries tab. Proxied to delivery-hub with a service token; partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param page  (optional, default to 1)
+     * @param size  (optional, default to 20)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return ApiResponse&lt;PageResponseListMerchantDeliveryRow&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<PageResponseListMerchantDeliveryRow> getPartnerMerchantDeliveriesWithHttpInfo(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer size, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        okhttp3.Call localVarCall = getPartnerMerchantDeliveriesValidateBeforeCall(merchantId, page, size, acceptLanguage, null);
+        Type localVarReturnType = new TypeToken<PageResponseListMerchantDeliveryRow>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * List a merchant&#39;s deliveries (asynchronously)
+     * Returns a page of the merchant&#39;s deliveries (newest first) for the detail-page Deliveries tab. Proxied to delivery-hub with a service token; partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param page  (optional, default to 1)
+     * @param size  (optional, default to 20)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getPartnerMerchantDeliveriesAsync(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer size, @javax.annotation.Nullable String acceptLanguage, final ApiCallback<PageResponseListMerchantDeliveryRow> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = getPartnerMerchantDeliveriesValidateBeforeCall(merchantId, page, size, acceptLanguage, _callback);
+        Type localVarReturnType = new TypeToken<PageResponseListMerchantDeliveryRow>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for getPartnerMerchantEarnings
+     * @param merchantId  (required)
+     * @param page  (optional, default to 1)
+     * @param size  (optional, default to 20)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getPartnerMerchantEarningsCall(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer size, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/auth/partners/merchants/{merchantId}/earnings"
+            .replace("{" + "merchantId" + "}", localVarApiClient.escapeString(merchantId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (page != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("page", page));
+        }
+
+        if (size != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("size", size));
+        }
+
+        final String[] localVarAccepts = {
+            "*/*"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        if (acceptLanguage != null) {
+            localVarHeaderParams.put("Accept-Language", localVarApiClient.parameterToString(acceptLanguage));
+        }
+
+
+        String[] localVarAuthNames = new String[] { "bearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call getPartnerMerchantEarningsValidateBeforeCall(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer size, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'merchantId' is set
+        if (merchantId == null) {
+            throw new ApiException("Missing the required parameter 'merchantId' when calling getPartnerMerchantEarnings(Async)");
+        }
+
+        return getPartnerMerchantEarningsCall(merchantId, page, size, acceptLanguage, _callback);
+
+    }
+
+    /**
+     * List a merchant&#39;s earnings
+     * Returns a page of the merchant&#39;s earnings (credit accruals, newest first) for the detail-page Earnings tab. Proxied to partner-program; partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param page  (optional, default to 1)
+     * @param size  (optional, default to 20)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return PageResponseListMerchantEarningRow
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public PageResponseListMerchantEarningRow getPartnerMerchantEarnings(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer size, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        ApiResponse<PageResponseListMerchantEarningRow> localVarResp = getPartnerMerchantEarningsWithHttpInfo(merchantId, page, size, acceptLanguage);
+        return localVarResp.getData();
+    }
+
+    /**
+     * List a merchant&#39;s earnings
+     * Returns a page of the merchant&#39;s earnings (credit accruals, newest first) for the detail-page Earnings tab. Proxied to partner-program; partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param page  (optional, default to 1)
+     * @param size  (optional, default to 20)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return ApiResponse&lt;PageResponseListMerchantEarningRow&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<PageResponseListMerchantEarningRow> getPartnerMerchantEarningsWithHttpInfo(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer size, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        okhttp3.Call localVarCall = getPartnerMerchantEarningsValidateBeforeCall(merchantId, page, size, acceptLanguage, null);
+        Type localVarReturnType = new TypeToken<PageResponseListMerchantEarningRow>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * List a merchant&#39;s earnings (asynchronously)
+     * Returns a page of the merchant&#39;s earnings (credit accruals, newest first) for the detail-page Earnings tab. Proxied to partner-program; partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param page  (optional, default to 1)
+     * @param size  (optional, default to 20)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getPartnerMerchantEarningsAsync(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable Integer page, @javax.annotation.Nullable Integer size, @javax.annotation.Nullable String acceptLanguage, final ApiCallback<PageResponseListMerchantEarningRow> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = getPartnerMerchantEarningsValidateBeforeCall(merchantId, page, size, acceptLanguage, _callback);
+        Type localVarReturnType = new TypeToken<PageResponseListMerchantEarningRow>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for getPartnerMerchantEarningsSummary
+     * @param merchantId  (required)
+     * @param currency  (optional, default to ILS)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getPartnerMerchantEarningsSummaryCall(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String currency, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/auth/partners/merchants/{merchantId}/earnings/summary"
+            .replace("{" + "merchantId" + "}", localVarApiClient.escapeString(merchantId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (currency != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("currency", currency));
+        }
+
+        final String[] localVarAccepts = {
+            "*/*"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        if (acceptLanguage != null) {
+            localVarHeaderParams.put("Accept-Language", localVarApiClient.parameterToString(acceptLanguage));
+        }
+
+
+        String[] localVarAuthNames = new String[] { "bearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call getPartnerMerchantEarningsSummaryValidateBeforeCall(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String currency, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'merchantId' is set
+        if (merchantId == null) {
+            throw new ApiException("Missing the required parameter 'merchantId' when calling getPartnerMerchantEarningsSummary(Async)");
+        }
+
+        return getPartnerMerchantEarningsSummaryCall(merchantId, currency, acceptLanguage, _callback);
+
+    }
+
+    /**
+     * Merchant earnings totals
+     * Lifetime + pending earnings totals for the detail-page stat tiles. Proxied to partner-program; partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param currency  (optional, default to ILS)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return MerchantEarningsSummary
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public MerchantEarningsSummary getPartnerMerchantEarningsSummary(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String currency, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        ApiResponse<MerchantEarningsSummary> localVarResp = getPartnerMerchantEarningsSummaryWithHttpInfo(merchantId, currency, acceptLanguage);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Merchant earnings totals
+     * Lifetime + pending earnings totals for the detail-page stat tiles. Proxied to partner-program; partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param currency  (optional, default to ILS)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return ApiResponse&lt;MerchantEarningsSummary&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<MerchantEarningsSummary> getPartnerMerchantEarningsSummaryWithHttpInfo(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String currency, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        okhttp3.Call localVarCall = getPartnerMerchantEarningsSummaryValidateBeforeCall(merchantId, currency, acceptLanguage, null);
+        Type localVarReturnType = new TypeToken<MerchantEarningsSummary>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Merchant earnings totals (asynchronously)
+     * Lifetime + pending earnings totals for the detail-page stat tiles. Proxied to partner-program; partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param currency  (optional, default to ILS)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getPartnerMerchantEarningsSummaryAsync(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String currency, @javax.annotation.Nullable String acceptLanguage, final ApiCallback<MerchantEarningsSummary> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = getPartnerMerchantEarningsSummaryValidateBeforeCall(merchantId, currency, acceptLanguage, _callback);
+        Type localVarReturnType = new TypeToken<MerchantEarningsSummary>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for getPartnerMerchantStats
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Statistics retrieved successfully </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Partner not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getPartnerMerchantStatsCall(@javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/auth/partners/merchants/stats";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "*/*"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        if (acceptLanguage != null) {
+            localVarHeaderParams.put("Accept-Language", localVarApiClient.parameterToString(acceptLanguage));
+        }
+
+
+        String[] localVarAuthNames = new String[] { "bearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call getPartnerMerchantStatsValidateBeforeCall(@javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        return getPartnerMerchantStatsCall(acceptLanguage, _callback);
+
+    }
+
+    /**
+     * Get active-merchant statistics
+     * Returns active-merchant statistics for the authenticated partner: the current active-merchant count, the active count as of ~30 days ago (the previous-period comparison base), and a 7-day cumulative series for trend display.
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return MerchantStats
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Statistics retrieved successfully </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Partner not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public MerchantStats getPartnerMerchantStats(@javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        ApiResponse<MerchantStats> localVarResp = getPartnerMerchantStatsWithHttpInfo(acceptLanguage);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Get active-merchant statistics
+     * Returns active-merchant statistics for the authenticated partner: the current active-merchant count, the active count as of ~30 days ago (the previous-period comparison base), and a 7-day cumulative series for trend display.
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return ApiResponse&lt;MerchantStats&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Statistics retrieved successfully </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Partner not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<MerchantStats> getPartnerMerchantStatsWithHttpInfo(@javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        okhttp3.Call localVarCall = getPartnerMerchantStatsValidateBeforeCall(acceptLanguage, null);
+        Type localVarReturnType = new TypeToken<MerchantStats>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Get active-merchant statistics (asynchronously)
+     * Returns active-merchant statistics for the authenticated partner: the current active-merchant count, the active count as of ~30 days ago (the previous-period comparison base), and a 7-day cumulative series for trend display.
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Statistics retrieved successfully </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> Unauthorized </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Partner not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getPartnerMerchantStatsAsync(@javax.annotation.Nullable String acceptLanguage, final ApiCallback<MerchantStats> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = getPartnerMerchantStatsValidateBeforeCall(acceptLanguage, _callback);
+        Type localVarReturnType = new TypeToken<MerchantStats>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -664,6 +1664,424 @@ public class PartnerMerchantsApi {
 
         okhttp3.Call localVarCall = partnerOnboardMerchantValidateBeforeCall(merchantOnboardingRequest, acceptLanguage, _callback);
         Type localVarReturnType = new TypeToken<PartnerOnboardingResult>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for searchPartnerMerchants
+     * @param searchMerchantsRequest  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call searchPartnerMerchantsCall(@javax.annotation.Nonnull SearchMerchantsRequest searchMerchantsRequest, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = searchMerchantsRequest;
+
+        // create path and map variables
+        String localVarPath = "/auth/partners/merchants/search";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "*/*"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        if (acceptLanguage != null) {
+            localVarHeaderParams.put("Accept-Language", localVarApiClient.parameterToString(acceptLanguage));
+        }
+
+
+        String[] localVarAuthNames = new String[] { "bearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call searchPartnerMerchantsValidateBeforeCall(@javax.annotation.Nonnull SearchMerchantsRequest searchMerchantsRequest, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'searchMerchantsRequest' is set
+        if (searchMerchantsRequest == null) {
+            throw new ApiException("Missing the required parameter 'searchMerchantsRequest' when calling searchPartnerMerchants(Async)");
+        }
+
+        return searchPartnerMerchantsCall(searchMerchantsRequest, acceptLanguage, _callback);
+
+    }
+
+    /**
+     * Search partner merchants
+     * Advanced search over the authenticated partner&#39;s merchants with full-text query, filters, sorting, and pagination. Partner scope is enforced server-side.
+     * @param searchMerchantsRequest  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return PageResponseListMerchantSummary
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public PageResponseListMerchantSummary searchPartnerMerchants(@javax.annotation.Nonnull SearchMerchantsRequest searchMerchantsRequest, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        ApiResponse<PageResponseListMerchantSummary> localVarResp = searchPartnerMerchantsWithHttpInfo(searchMerchantsRequest, acceptLanguage);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Search partner merchants
+     * Advanced search over the authenticated partner&#39;s merchants with full-text query, filters, sorting, and pagination. Partner scope is enforced server-side.
+     * @param searchMerchantsRequest  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return ApiResponse&lt;PageResponseListMerchantSummary&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<PageResponseListMerchantSummary> searchPartnerMerchantsWithHttpInfo(@javax.annotation.Nonnull SearchMerchantsRequest searchMerchantsRequest, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        okhttp3.Call localVarCall = searchPartnerMerchantsValidateBeforeCall(searchMerchantsRequest, acceptLanguage, null);
+        Type localVarReturnType = new TypeToken<PageResponseListMerchantSummary>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Search partner merchants (asynchronously)
+     * Advanced search over the authenticated partner&#39;s merchants with full-text query, filters, sorting, and pagination. Partner scope is enforced server-side.
+     * @param searchMerchantsRequest  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call searchPartnerMerchantsAsync(@javax.annotation.Nonnull SearchMerchantsRequest searchMerchantsRequest, @javax.annotation.Nullable String acceptLanguage, final ApiCallback<PageResponseListMerchantSummary> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = searchPartnerMerchantsValidateBeforeCall(searchMerchantsRequest, acceptLanguage, _callback);
+        Type localVarReturnType = new TypeToken<PageResponseListMerchantSummary>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for suspendPartnerMerchant
+     * @param merchantId  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call suspendPartnerMerchantCall(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/auth/partners/merchants/{merchantId}/suspend"
+            .replace("{" + "merchantId" + "}", localVarApiClient.escapeString(merchantId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "*/*"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        if (acceptLanguage != null) {
+            localVarHeaderParams.put("Accept-Language", localVarApiClient.parameterToString(acceptLanguage));
+        }
+
+
+        String[] localVarAuthNames = new String[] { "bearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call suspendPartnerMerchantValidateBeforeCall(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'merchantId' is set
+        if (merchantId == null) {
+            throw new ApiException("Missing the required parameter 'merchantId' when calling suspendPartnerMerchant(Async)");
+        }
+
+        return suspendPartnerMerchantCall(merchantId, acceptLanguage, _callback);
+
+    }
+
+    /**
+     * Suspend merchant
+     * Sets the merchant&#39;s account status to SUSPENDED. Partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return MerchantDetail
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public MerchantDetail suspendPartnerMerchant(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        ApiResponse<MerchantDetail> localVarResp = suspendPartnerMerchantWithHttpInfo(merchantId, acceptLanguage);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Suspend merchant
+     * Sets the merchant&#39;s account status to SUSPENDED. Partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return ApiResponse&lt;MerchantDetail&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<MerchantDetail> suspendPartnerMerchantWithHttpInfo(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        okhttp3.Call localVarCall = suspendPartnerMerchantValidateBeforeCall(merchantId, acceptLanguage, null);
+        Type localVarReturnType = new TypeToken<MerchantDetail>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Suspend merchant (asynchronously)
+     * Sets the merchant&#39;s account status to SUSPENDED. Partner-scoped (404 if not owned).
+     * @param merchantId  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call suspendPartnerMerchantAsync(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nullable String acceptLanguage, final ApiCallback<MerchantDetail> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = suspendPartnerMerchantValidateBeforeCall(merchantId, acceptLanguage, _callback);
+        Type localVarReturnType = new TypeToken<MerchantDetail>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for updatePartnerMerchant
+     * @param merchantId  (required)
+     * @param merchantUpdateRequest  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call updatePartnerMerchantCall(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nonnull MerchantUpdateRequest merchantUpdateRequest, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = merchantUpdateRequest;
+
+        // create path and map variables
+        String localVarPath = "/auth/partners/merchants/{merchantId}"
+            .replace("{" + "merchantId" + "}", localVarApiClient.escapeString(merchantId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "*/*"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        if (acceptLanguage != null) {
+            localVarHeaderParams.put("Accept-Language", localVarApiClient.parameterToString(acceptLanguage));
+        }
+
+
+        String[] localVarAuthNames = new String[] { "bearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call updatePartnerMerchantValidateBeforeCall(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nonnull MerchantUpdateRequest merchantUpdateRequest, @javax.annotation.Nullable String acceptLanguage, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'merchantId' is set
+        if (merchantId == null) {
+            throw new ApiException("Missing the required parameter 'merchantId' when calling updatePartnerMerchant(Async)");
+        }
+
+        // verify the required parameter 'merchantUpdateRequest' is set
+        if (merchantUpdateRequest == null) {
+            throw new ApiException("Missing the required parameter 'merchantUpdateRequest' when calling updatePartnerMerchant(Async)");
+        }
+
+        return updatePartnerMerchantCall(merchantId, merchantUpdateRequest, acceptLanguage, _callback);
+
+    }
+
+    /**
+     * Update merchant profile
+     * Updates editable profile fields of one of the partner&#39;s merchants. Null fields are left unchanged. Account email and status are not editable here.
+     * @param merchantId  (required)
+     * @param merchantUpdateRequest  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return MerchantDetail
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public MerchantDetail updatePartnerMerchant(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nonnull MerchantUpdateRequest merchantUpdateRequest, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        ApiResponse<MerchantDetail> localVarResp = updatePartnerMerchantWithHttpInfo(merchantId, merchantUpdateRequest, acceptLanguage);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Update merchant profile
+     * Updates editable profile fields of one of the partner&#39;s merchants. Null fields are left unchanged. Account email and status are not editable here.
+     * @param merchantId  (required)
+     * @param merchantUpdateRequest  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @return ApiResponse&lt;MerchantDetail&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<MerchantDetail> updatePartnerMerchantWithHttpInfo(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nonnull MerchantUpdateRequest merchantUpdateRequest, @javax.annotation.Nullable String acceptLanguage) throws ApiException {
+        okhttp3.Call localVarCall = updatePartnerMerchantValidateBeforeCall(merchantId, merchantUpdateRequest, acceptLanguage, null);
+        Type localVarReturnType = new TypeToken<MerchantDetail>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Update merchant profile (asynchronously)
+     * Updates editable profile fields of one of the partner&#39;s merchants. Null fields are left unchanged. Account email and status are not editable here.
+     * @param merchantId  (required)
+     * @param merchantUpdateRequest  (required)
+     * @param acceptLanguage Language preference for response content. Supported: en, he (optional, default to en)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call updatePartnerMerchantAsync(@javax.annotation.Nonnull UUID merchantId, @javax.annotation.Nonnull MerchantUpdateRequest merchantUpdateRequest, @javax.annotation.Nullable String acceptLanguage, final ApiCallback<MerchantDetail> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = updatePartnerMerchantValidateBeforeCall(merchantId, merchantUpdateRequest, acceptLanguage, _callback);
+        Type localVarReturnType = new TypeToken<MerchantDetail>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

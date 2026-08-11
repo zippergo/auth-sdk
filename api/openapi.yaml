@@ -13,11 +13,100 @@ servers:
 tags:
 - description: Manage merchants onboarded by the authenticated partner
   name: Partner Merchants
+- description: OAuth2 token introspection (RFC 7662)
+  name: OAuth2
 - description: Manage merchant API keys for OAuth2 client credentials authentication
   name: Merchant API Keys
 - description: OAuth2 client credentials token endpoint
   name: OAuth2
 paths:
+  /auth/partners/merchants/{merchantId}:
+    get:
+      description: Returns the full profile of one of the authenticated partner's
+        merchants. Returns 404 if the merchant does not belong to this partner.
+      operationId: getPartnerMerchant
+      parameters:
+      - explode: false
+        in: path
+        name: merchantId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MerchantDetail'
+          description: OK
+      security:
+      - bearerAuth: []
+      summary: Get merchant detail
+      tags:
+      - Partner Merchants
+      x-accepts:
+      - '*/*'
+    put:
+      description: Updates editable profile fields of one of the partner's merchants.
+        Null fields are left unchanged. Account email and status are not editable
+        here.
+      operationId: updatePartnerMerchant
+      parameters:
+      - explode: false
+        in: path
+        name: merchantId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MerchantUpdateRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MerchantDetail'
+          description: OK
+      security:
+      - bearerAuth: []
+      summary: Update merchant profile
+      tags:
+      - Partner Merchants
+      x-content-type: application/json
+      x-accepts:
+      - '*/*'
   /auth/partners/merchants:
     get:
       description: "Returns a paginated list of all merchants onboarded by the authenticated\
@@ -105,6 +194,165 @@ paths:
       x-content-type: application/json
       x-accepts:
       - '*/*'
+  /auth/partners/merchants/{merchantId}/suspend:
+    post:
+      description: Sets the merchant's account status to SUSPENDED. Partner-scoped
+        (404 if not owned).
+      operationId: suspendPartnerMerchant
+      parameters:
+      - explode: false
+        in: path
+        name: merchantId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MerchantDetail'
+          description: OK
+      security:
+      - bearerAuth: []
+      summary: Suspend merchant
+      tags:
+      - Partner Merchants
+      x-accepts:
+      - '*/*'
+  /auth/partners/merchants/{merchantId}/activate:
+    post:
+      description: Sets the merchant's account status to ACTIVE. Partner-scoped (404
+        if not owned).
+      operationId: activatePartnerMerchant
+      parameters:
+      - explode: false
+        in: path
+        name: merchantId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MerchantDetail'
+          description: OK
+      security:
+      - bearerAuth: []
+      summary: Activate merchant
+      tags:
+      - Partner Merchants
+      x-accepts:
+      - '*/*'
+  /auth/partners/merchants/search:
+    post:
+      description: "Advanced search over the authenticated partner's merchants with\
+        \ full-text query, filters, sorting, and pagination. Partner scope is enforced\
+        \ server-side."
+      operationId: searchPartnerMerchants
+      parameters:
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchMerchantsRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseListMerchantSummary'
+          description: OK
+      security:
+      - bearerAuth: []
+      summary: Search partner merchants
+      tags:
+      - Partner Merchants
+      x-content-type: application/json
+      x-accepts:
+      - '*/*'
+  /auth/partners/merchants/bulk/status:
+    post:
+      description: Applies an activate/suspend action to a set of the partner's merchants.
+        Ids not owned by the partner are silently skipped.
+      operationId: bulkSetPartnerMerchantStatus
+      parameters:
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MerchantBulkStatusRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MerchantBulkStatusResult'
+          description: OK
+      security:
+      - bearerAuth: []
+      summary: Bulk merchant status change
+      tags:
+      - Partner Merchants
+      x-content-type: application/json
+      x-accepts:
+      - '*/*'
   /oauth/token:
     post:
       description: Issues a JWT access token in exchange for valid API client credentials
@@ -156,6 +404,67 @@ paths:
       security:
       - basicAuth: []
       summary: Exchange client credentials for an access token
+      tags:
+      - OAuth2
+      x-accepts:
+      - '*/*'
+  /oauth/introspect:
+    post:
+      description: Returns whether the supplied token is currently active. Implements
+        RFC 7662. Caller must authenticate with HTTP Basic using API client credentials
+        (Base64-encoded apiKey:apiSecret).
+      operationId: introspect
+      parameters:
+      - description: Basic Authentication header (Base64-encoded apiKey:apiSecret).
+          Required unless application.security.introspection.require-caller-auth is
+          false.
+        explode: false
+        in: header
+        name: Authorization
+        required: false
+        schema:
+          type: string
+        style: simple
+      - description: Token to introspect
+        explode: true
+        in: query
+        name: token
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: Token type hint (unused; kept for RFC 7662 compatibility)
+        explode: true
+        in: query
+        name: token_type_hint
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/IntrospectionResponse'
+          description: Introspection result
+        "401":
+          description: Caller credentials missing or invalid
+      security:
+      - basicAuth: []
+      summary: Introspect an access token
       tags:
       - OAuth2
       x-accepts:
@@ -289,6 +598,210 @@ paths:
       - Partner Merchants
       x-accepts:
       - '*/*'
+  /auth/partners/merchants/{merchantId}/earnings:
+    get:
+      description: "Returns a page of the merchant's earnings (credit accruals, newest\
+        \ first) for the detail-page Earnings tab. Proxied to partner-program; partner-scoped\
+        \ (404 if not owned)."
+      operationId: getPartnerMerchantEarnings
+      parameters:
+      - explode: false
+        in: path
+        name: merchantId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          format: int32
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          format: int32
+          type: integer
+        style: form
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseListMerchantEarningRow'
+          description: OK
+      security:
+      - bearerAuth: []
+      summary: List a merchant's earnings
+      tags:
+      - Partner Merchants
+      x-accepts:
+      - '*/*'
+  /auth/partners/merchants/{merchantId}/earnings/summary:
+    get:
+      description: Lifetime + pending earnings totals for the detail-page stat tiles.
+        Proxied to partner-program; partner-scoped (404 if not owned).
+      operationId: getPartnerMerchantEarningsSummary
+      parameters:
+      - explode: false
+        in: path
+        name: merchantId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: currency
+        required: false
+        schema:
+          default: ILS
+          type: string
+        style: form
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MerchantEarningsSummary'
+          description: OK
+      security:
+      - bearerAuth: []
+      summary: Merchant earnings totals
+      tags:
+      - Partner Merchants
+      x-accepts:
+      - '*/*'
+  /auth/partners/merchants/{merchantId}/deliveries:
+    get:
+      description: Returns a page of the merchant's deliveries (newest first) for
+        the detail-page Deliveries tab. Proxied to delivery-hub with a service token;
+        partner-scoped (404 if not owned).
+      operationId: getPartnerMerchantDeliveries
+      parameters:
+      - explode: false
+        in: path
+        name: merchantId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          format: int32
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          format: int32
+          type: integer
+        style: form
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseListMerchantDeliveryRow'
+          description: OK
+      security:
+      - bearerAuth: []
+      summary: List a merchant's deliveries
+      tags:
+      - Partner Merchants
+      x-accepts:
+      - '*/*'
+  /auth/partners/merchants/stats:
+    get:
+      description: "Returns active-merchant statistics for the authenticated partner:\
+        \ the current active-merchant count, the active count as of ~30 days ago (the\
+        \ previous-period comparison base), and a 7-day cumulative series for trend\
+        \ display."
+      operationId: getPartnerMerchantStats
+      parameters:
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MerchantStats'
+          description: Statistics retrieved successfully
+        "401":
+          description: Unauthorized
+        "404":
+          description: Partner not found
+      security:
+      - bearerAuth: []
+      summary: Get active-merchant statistics
+      tags:
+      - Partner Merchants
+      x-accepts:
+      - '*/*'
   /auth/partners/merchants/by-email:
     get:
       description: Looks up a merchant by their email address within the authenticated
@@ -379,17 +892,186 @@ paths:
       - application/json
 components:
   schemas:
+    MerchantUpdateRequest:
+      description: Editable merchant profile fields; null fields are left unchanged
+      example:
+        businessEmail: businessEmail
+        addressHe: addressHe
+        lng: 6.027456183070403
+        cityHe: cityHe
+        nameHe: nameHe
+        businessName: businessName
+        cityEn: cityEn
+        nameEn: nameEn
+        businessPhone: businessPhone
+        businessType: food
+        addressEn: addressEn
+        lat: 0.8008281904610115
+      properties:
+        nameHe:
+          type: string
+        nameEn:
+          type: string
+        businessName:
+          type: string
+        businessEmail:
+          type: string
+        businessPhone:
+          type: string
+        businessType:
+          enum:
+          - food
+          - retail
+          type: string
+        addressHe:
+          type: string
+        addressEn:
+          type: string
+        cityHe:
+          type: string
+        cityEn:
+          type: string
+        lat:
+          format: double
+          type: number
+        lng:
+          format: double
+          type: number
+    MerchantDetail:
+      description: Full merchant profile for the detail view
+      example:
+        businessEmail: businessEmail
+        lastModifiedAt: 2000-01-23T04:56:07.000+00:00
+        lng: 6.027456183070403
+        cityHe: cityHe
+        origin: SELF
+        businessName: businessName
+        nameEn: nameEn
+        addressHe: addressHe
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        ownerHe: ownerHe
+        nameHe: nameHe
+        referralCode: referralCode
+        referrerUserId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        cityEn: cityEn
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        businessPhone: businessPhone
+        partnerId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        businessType: food
+        addressEn: addressEn
+        ownerEn: ownerEn
+        email: email
+        lat: 0.8008281904610115
+        status: PENDING_ACTIVATION
+      properties:
+        id:
+          description: Unique identifier of the merchant
+          format: uuid
+          type: string
+        nameHe:
+          description: Hebrew business name
+          type: string
+        nameEn:
+          description: English business name
+          type: string
+        businessName:
+          description: Legacy/canonical business name
+          type: string
+        ownerHe:
+          description: Owner full name (Hebrew display)
+          type: string
+        ownerEn:
+          description: Owner full name (English display)
+          type: string
+        email:
+          description: Owner account email
+          type: string
+        businessEmail:
+          description: Public-facing business email
+          type: string
+        businessPhone:
+          description: Business phone
+          type: string
+        businessType:
+          description: Business category
+          enum:
+          - food
+          - retail
+          type: string
+        status:
+          description: Account status (active/suspended/pending derived client-side)
+          enum:
+          - PENDING_ACTIVATION
+          - PENDING_PASSWORD_SETUP
+          - ACTIVE
+          - SUSPENDED
+          type: string
+        origin:
+          description: How the merchant was onboarded
+          enum:
+          - SELF
+          - PARTNER_API
+          - ADMIN
+          - SSO
+          type: string
+        partnerId:
+          description: "Owning partner id, if any"
+          format: uuid
+          type: string
+        referralCode:
+          description: Merchant referral code
+          type: string
+        referrerUserId:
+          description: "Referrer (partner) user id, if any"
+          format: uuid
+          type: string
+        addressHe:
+          description: Hebrew address line
+          type: string
+        addressEn:
+          description: English address line
+          type: string
+        cityHe:
+          description: Hebrew city
+          type: string
+        cityEn:
+          description: English city
+          type: string
+        lat:
+          description: Latitude
+          format: double
+          type: number
+        lng:
+          description: Longitude
+          format: double
+          type: number
+        createdAt:
+          description: Creation timestamp
+          format: date-time
+          type: string
+        lastModifiedAt:
+          description: Last modification timestamp
+          format: date-time
+          type: string
     MerchantOnboardingRequest:
       example:
         businessEmail: businessEmail
-        firstName: firstName
         lastName: lastName
         address: address
+        lng: 6.027456183070403
+        cityHe: cityHe
         businessName: businessName
+        nameEn: nameEn
+        firstName: firstName
+        addressHe: addressHe
+        nameHe: nameHe
+        cityEn: cityEn
         businessPhone: businessPhone
-        businessType: businessType
+        businessType: food
+        addressEn: addressEn
         requireEmailConfirmation: true
         email: email
+        lat: 0.8008281904610115
       properties:
         firstName:
           minLength: 1
@@ -400,6 +1082,10 @@ components:
         businessName:
           minLength: 1
           type: string
+        nameHe:
+          type: string
+        nameEn:
+          type: string
         email:
           format: email
           minLength: 1
@@ -409,9 +1095,26 @@ components:
         businessPhone:
           type: string
         businessType:
+          enum:
+          - food
+          - retail
           type: string
         address:
           type: string
+        addressHe:
+          type: string
+        addressEn:
+          type: string
+        cityHe:
+          type: string
+        cityEn:
+          type: string
+        lat:
+          format: double
+          type: number
+        lng:
+          format: double
+          type: number
         requireEmailConfirmation:
           type: boolean
       required:
@@ -442,6 +1145,295 @@ components:
         message:
           description: Human-readable status message about the onboarding result
           type: string
+    Filter:
+      description: Individual filter criteria for a specific field
+      example:
+        name: email
+        logic: EQ
+        value: ""
+      properties:
+        name:
+          description: Field name to filter on
+          example: email
+          type: string
+        value: {}
+        logic:
+          description: Filter logic operator to apply
+          enum:
+          - IN
+          - NOT_IN
+          - EQ
+          - LTE
+          - GTE
+          - IS_NULL
+          - IS_NOT_NULL
+          - LIKE
+          example: EQ
+          type: string
+      required:
+      - logic
+      - name
+      - value
+    Pagination:
+      description: Pagination parameters for controlling result set size and page
+        selection
+      example:
+        pageNumber: 1
+        itemsPerPage: 10
+      properties:
+        itemsPerPage:
+          default: 50
+          description: Number of items per page. Defaults to 50 if not specified.
+          example: 10
+          format: int32
+          maximum: 1000
+          minimum: 1
+          type: integer
+        pageNumber:
+          default: 1
+          description: Page number (1-based indexing). Defaults to 1 if not specified.
+          example: 1
+          format: int32
+          minimum: 1
+          type: integer
+    SearchMerchantsRequest:
+      description: |
+        Advanced search request for a partner's merchants with filtering, sorting, and pagination.
+        **Query Fields** (full-text, case-insensitive LIKE): `nameEn`, `nameHe`, `businessName`, and the owner's account email.
+        **Available Filter/Sort Fields:**
+        - `businessType` (food | retail, sortable)
+        - `origin` (SELF | PARTNER_API | ADMIN, sortable)
+        - `businessName` (String, sortable)
+        - `createdDate` (Instant, sortable)
+
+        Note: account `status` lives on the linked user, so it isn't a mapped field here.
+        Status *filtering* is applied server-side as a join predicate in MerchantQueryService;
+        status *sorting* is not a server-side field and stays client-side.
+      example:
+        pagination:
+          pageNumber: 1
+          itemsPerPage: 10
+        query: John
+        filters:
+          key:
+          - name: email
+            logic: EQ
+            value: ""
+          - name: email
+            logic: EQ
+            value: ""
+        sort:
+        - fieldName: createdDate
+          direction: DESC
+        - fieldName: createdDate
+          direction: DESC
+      properties:
+        query:
+          description: Full-text search query string. Matches against predefined query
+            fields using case-insensitive LIKE.
+          example: John
+          type: string
+        filters:
+          additionalProperties:
+            items:
+              $ref: '#/components/schemas/Filter'
+          description: Filter groups with AND/OR logic. Each group contains a list
+            of filter criteria that are combined using the specified operator.
+        sort:
+          description: Sort criteria applied in order. Only sortable fields are accepted.
+          items:
+            $ref: '#/components/schemas/SortField'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    SortField:
+      description: Sort criteria for ordering results
+      example:
+        fieldName: createdDate
+        direction: DESC
+      properties:
+        fieldName:
+          description: Field name to sort by. Must be a sortable field.
+          example: createdDate
+          type: string
+        direction:
+          default: asc
+          description: Sort direction (case-insensitive)
+          enum:
+          - ASC
+          - asc
+          - DESC
+          - desc
+          example: DESC
+          type: string
+      required:
+      - fieldName
+    MerchantSummary:
+      description: "Summary view of a merchant including business info, status, and\
+        \ onboarding origin"
+      example:
+        origin: SELF
+        businessName: businessName
+        nameEn: nameEn
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        ownerHe: ownerHe
+        nameHe: nameHe
+        referralCode: referralCode
+        referrerUserId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        partnerId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        businessType: food
+        ownerEn: ownerEn
+        email: email
+        status: PENDING_ACTIVATION
+      properties:
+        id:
+          description: Unique identifier of the merchant
+          format: uuid
+          type: string
+        businessName:
+          description: Registered business name of the merchant
+          type: string
+        nameHe:
+          description: Hebrew business name
+          type: string
+        nameEn:
+          description: English business name
+          type: string
+        ownerHe:
+          description: Owner full name (Hebrew display)
+          type: string
+        ownerEn:
+          description: Owner full name (English display)
+          type: string
+        businessType:
+          description: Business category
+          enum:
+          - food
+          - retail
+          type: string
+        email:
+          description: Email address associated with the merchant account
+          type: string
+        status:
+          description: Current account status of the merchant
+          enum:
+          - PENDING_ACTIVATION
+          - PENDING_PASSWORD_SETUP
+          - ACTIVE
+          - SUSPENDED
+          type: string
+        origin:
+          description: "How the merchant was onboarded (e.g. SELF, PARTNER)"
+          enum:
+          - SELF
+          - PARTNER_API
+          - ADMIN
+          - SSO
+          type: string
+        partnerId:
+          description: "Identifier of the partner that onboarded this merchant, if\
+            \ any"
+          format: uuid
+          type: string
+        referralCode:
+          description: Referral code generated for this merchant
+          type: string
+        referrerUserId:
+          description: User id of the referrer (partner's user id) when onboarded
+            by a partner
+          format: uuid
+          type: string
+        createdAt:
+          description: Timestamp when the merchant was created
+          format: date-time
+          type: string
+    PageResponseListMerchantSummary:
+      example:
+        total: 1
+        data:
+        - origin: SELF
+          businessName: businessName
+          nameEn: nameEn
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          ownerHe: ownerHe
+          nameHe: nameHe
+          referralCode: referralCode
+          referrerUserId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          partnerId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          businessType: food
+          ownerEn: ownerEn
+          email: email
+          status: PENDING_ACTIVATION
+        - origin: SELF
+          businessName: businessName
+          nameEn: nameEn
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          ownerHe: ownerHe
+          nameHe: nameHe
+          referralCode: referralCode
+          referrerUserId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          partnerId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          businessType: food
+          ownerEn: ownerEn
+          email: email
+          status: PENDING_ACTIVATION
+        totalPages: 6
+        limit: 5
+        page: 0
+      properties:
+        page:
+          format: int32
+          type: integer
+        totalPages:
+          format: int32
+          type: integer
+        total:
+          format: int64
+          type: integer
+        limit:
+          format: int32
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/MerchantSummary'
+          type: array
+    MerchantBulkStatusRequest:
+      description: Bulk status change for a set of the partner's merchants
+      example:
+        merchantIds:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        action: ACTIVATE
+      properties:
+        merchantIds:
+          description: Merchant ids to update
+          items:
+            format: uuid
+            type: string
+          minItems: 1
+          type: array
+        action:
+          description: Status action to apply to each merchant
+          enum:
+          - ACTIVATE
+          - SUSPEND
+          type: string
+      required:
+      - action
+      - merchantIds
+    MerchantBulkStatusResult:
+      description: Result of a bulk merchant status change
+      example:
+        updated: 0
+      properties:
+        updated:
+          description: Number of merchants actually updated (ids not owned by the
+            partner are skipped)
+          format: int32
+          type: integer
     TokenResponse:
       example:
         access_token: access_token
@@ -455,6 +1447,44 @@ components:
         expires_in:
           format: int32
           type: integer
+    IntrospectionResponse:
+      example:
+        sub: sub
+        auth_method: auth_method
+        azp: azp
+        scope: scope
+        iss: iss
+        active: true
+        exp: 0
+        token_type: token_type
+        iat: 6
+        jti: jti
+        client_id: client_id
+      properties:
+        active:
+          type: boolean
+        scope:
+          type: string
+        sub:
+          type: string
+        exp:
+          format: int64
+          type: integer
+        iat:
+          format: int64
+          type: integer
+        iss:
+          type: string
+        azp:
+          type: string
+        jti:
+          type: string
+        token_type:
+          type: string
+        auth_method:
+          type: string
+        client_id:
+          type: string
     CreateApiKeyRequest:
       example:
         label: label
@@ -515,52 +1545,6 @@ components:
           items:
             type: string
           type: array
-    MerchantSummary:
-      description: "Summary view of a merchant including business info, status, and\
-        \ onboarding origin"
-      example:
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        origin: SELF
-        businessName: businessName
-        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        partnerId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        email: email
-        status: PENDING_ACTIVATION
-      properties:
-        id:
-          description: Unique identifier of the merchant
-          format: uuid
-          type: string
-        businessName:
-          description: Registered business name of the merchant
-          type: string
-        email:
-          description: Email address associated with the merchant account
-          type: string
-        status:
-          description: Current account status of the merchant
-          enum:
-          - PENDING_ACTIVATION
-          - PENDING_PASSWORD_SETUP
-          - ACTIVE
-          - SUSPENDED
-          type: string
-        origin:
-          description: "How the merchant was onboarded (e.g. SELF, PARTNER)"
-          enum:
-          - SELF
-          - PARTNER_API
-          - ADMIN
-          type: string
-        partnerId:
-          description: "Identifier of the partner that onboarded this merchant, if\
-            \ any"
-          format: uuid
-          type: string
-        createdAt:
-          description: Timestamp when the merchant was created
-          format: date-time
-          type: string
     MerchantOnboardingStatus:
       description: Current onboarding status of a merchant including verification
         state
@@ -589,6 +1573,191 @@ components:
           description: Timestamp when the merchant was created
           format: date-time
           type: string
+    MerchantEarningRow:
+      description: An earning (credit accrual) attributed to a merchant (detail-page
+        Earnings tab)
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        amount: 5.637376656633329
+        deliveryId: deliveryId
+        currency: currency
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        state: state
+      properties:
+        id:
+          format: uuid
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        state:
+          type: string
+        deliveryId:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+    PageResponseListMerchantEarningRow:
+      example:
+        total: 1
+        data:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          amount: 5.637376656633329
+          deliveryId: deliveryId
+          currency: currency
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          amount: 5.637376656633329
+          deliveryId: deliveryId
+          currency: currency
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          state: state
+        totalPages: 6
+        limit: 5
+        page: 0
+      properties:
+        page:
+          format: int32
+          type: integer
+        totalPages:
+          format: int32
+          type: integer
+        total:
+          format: int64
+          type: integer
+        limit:
+          format: int32
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/MerchantEarningRow'
+          type: array
+    MerchantEarningsSummary:
+      description: Merchant earnings totals for the detail-page stat tiles
+      example:
+        total: 0.8008281904610115
+        pending: 6.027456183070403
+        currency: currency
+      properties:
+        currency:
+          type: string
+        total:
+          type: number
+        pending:
+          type: number
+    MerchantDeliveryRow:
+      description: A delivery belonging to a merchant (detail-page Deliveries tab)
+      example:
+        deliveryId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        dropoffCity: dropoffCity
+        createdDate: 2000-01-23T04:56:07.000+00:00
+        pickupCity: pickupCity
+        deliveryType: deliveryType
+        hubTrackingNumber: hubTrackingNumber
+        providerType: providerType
+        status: status
+      properties:
+        deliveryId:
+          format: uuid
+          type: string
+        hubTrackingNumber:
+          type: string
+        status:
+          type: string
+        providerType:
+          type: string
+        deliveryType:
+          type: string
+        pickupCity:
+          type: string
+        dropoffCity:
+          type: string
+        createdDate:
+          format: date-time
+          type: string
+    PageResponseListMerchantDeliveryRow:
+      example:
+        total: 1
+        data:
+        - deliveryId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          dropoffCity: dropoffCity
+          createdDate: 2000-01-23T04:56:07.000+00:00
+          pickupCity: pickupCity
+          deliveryType: deliveryType
+          hubTrackingNumber: hubTrackingNumber
+          providerType: providerType
+          status: status
+        - deliveryId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          dropoffCity: dropoffCity
+          createdDate: 2000-01-23T04:56:07.000+00:00
+          pickupCity: pickupCity
+          deliveryType: deliveryType
+          hubTrackingNumber: hubTrackingNumber
+          providerType: providerType
+          status: status
+        totalPages: 6
+        limit: 5
+        page: 0
+      properties:
+        page:
+          format: int32
+          type: integer
+        totalPages:
+          format: int32
+          type: integer
+        total:
+          format: int64
+          type: integer
+        limit:
+          format: int32
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/MerchantDeliveryRow'
+          type: array
+    MerchantStats:
+      description: Active-merchant statistics for the authenticated partner
+      example:
+        series:
+        - date: date
+          count: 1
+        - date: date
+          count: 1
+        active: 0
+        previousActive: 6
+      properties:
+        active:
+          description: Number of currently active merchants for this partner
+          format: int64
+          type: integer
+        previousActive:
+          description: Active merchants created before the previous-period cutoff
+            (~30 days ago); used as the comparison base for the period-over-period
+            delta
+          format: int64
+          type: integer
+        series:
+          description: "Cumulative active-merchant count per day for the last 7 days,\
+            \ oldest first"
+          items:
+            $ref: '#/components/schemas/Point'
+          type: array
+    Point:
+      description: A single day's cumulative active-merchant count
+      example:
+        date: date
+        count: 1
+      properties:
+        date:
+          description: Day in yyyy-MM-dd (Asia/Jerusalem)
+          type: string
+        count:
+          description: Cumulative number of active merchants as of the end of this
+            day
+          format: int64
+          type: integer
     ApiKeySummary:
       description: Summary of an API key including status and usage metadata
       example:

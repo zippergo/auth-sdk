@@ -4,8 +4,84 @@ All URIs are relative to *http://localhost:8080*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**introspect**](OAuth2Api.md#introspect) | **POST** /oauth/introspect | Introspect an access token |
 | [**token**](OAuth2Api.md#token) | **POST** /oauth/token | Exchange client credentials for an access token |
 
+
+<a id="introspect"></a>
+# **introspect**
+> IntrospectionResponse introspect(token, authorization, tokenTypeHint, acceptLanguage)
+
+Introspect an access token
+
+Returns whether the supplied token is currently active. Implements RFC 7662. Caller must authenticate with HTTP Basic using API client credentials (Base64-encoded apiKey:apiSecret).
+
+### Example
+```java
+// Import classes:
+import com.zipper.auth.sdk.ApiClient;
+import com.zipper.auth.sdk.ApiException;
+import com.zipper.auth.sdk.Configuration;
+import com.zipper.auth.sdk.auth.*;
+import com.zipper.auth.sdk.models.*;
+import com.zipper.auth.sdk.api.OAuth2Api;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost:8080");
+    
+    // Configure HTTP basic authorization: basicAuth
+    HttpBasicAuth basicAuth = (HttpBasicAuth) defaultClient.getAuthentication("basicAuth");
+    basicAuth.setUsername("YOUR USERNAME");
+    basicAuth.setPassword("YOUR PASSWORD");
+
+    OAuth2Api apiInstance = new OAuth2Api(defaultClient);
+    String token = "token_example"; // String | Token to introspect
+    String authorization = "authorization_example"; // String | Basic Authentication header (Base64-encoded apiKey:apiSecret). Required unless application.security.introspection.require-caller-auth is false.
+    String tokenTypeHint = "tokenTypeHint_example"; // String | Token type hint (unused; kept for RFC 7662 compatibility)
+    String acceptLanguage = "en"; // String | Language preference for response content. Supported: en, he
+    try {
+      IntrospectionResponse result = apiInstance.introspect(token, authorization, tokenTypeHint, acceptLanguage);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling OAuth2Api#introspect");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **token** | **String**| Token to introspect | |
+| **authorization** | **String**| Basic Authentication header (Base64-encoded apiKey:apiSecret). Required unless application.security.introspection.require-caller-auth is false. | [optional] |
+| **tokenTypeHint** | **String**| Token type hint (unused; kept for RFC 7662 compatibility) | [optional] |
+| **acceptLanguage** | **String**| Language preference for response content. Supported: en, he | [optional] [default to en] [enum: en, he] |
+
+### Return type
+
+[**IntrospectionResponse**](IntrospectionResponse.md)
+
+### Authorization
+
+[basicAuth](../README.md#basicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Introspection result |  -  |
+| **401** | Caller credentials missing or invalid |  -  |
 
 <a id="token"></a>
 # **token**

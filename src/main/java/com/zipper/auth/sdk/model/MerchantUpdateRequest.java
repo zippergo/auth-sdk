@@ -46,25 +46,10 @@ import java.util.Set;
 import com.zipper.auth.sdk.JSON;
 
 /**
- * MerchantOnboardingRequest
+ * Editable merchant profile fields; null fields are left unchanged
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.13.0")
-public class MerchantOnboardingRequest {
-  public static final String SERIALIZED_NAME_FIRST_NAME = "firstName";
-  @SerializedName(SERIALIZED_NAME_FIRST_NAME)
-  @javax.annotation.Nonnull
-  private String firstName;
-
-  public static final String SERIALIZED_NAME_LAST_NAME = "lastName";
-  @SerializedName(SERIALIZED_NAME_LAST_NAME)
-  @javax.annotation.Nonnull
-  private String lastName;
-
-  public static final String SERIALIZED_NAME_BUSINESS_NAME = "businessName";
-  @SerializedName(SERIALIZED_NAME_BUSINESS_NAME)
-  @javax.annotation.Nonnull
-  private String businessName;
-
+public class MerchantUpdateRequest {
   public static final String SERIALIZED_NAME_NAME_HE = "nameHe";
   @SerializedName(SERIALIZED_NAME_NAME_HE)
   @javax.annotation.Nullable
@@ -75,10 +60,10 @@ public class MerchantOnboardingRequest {
   @javax.annotation.Nullable
   private String nameEn;
 
-  public static final String SERIALIZED_NAME_EMAIL = "email";
-  @SerializedName(SERIALIZED_NAME_EMAIL)
-  @javax.annotation.Nonnull
-  private String email;
+  public static final String SERIALIZED_NAME_BUSINESS_NAME = "businessName";
+  @SerializedName(SERIALIZED_NAME_BUSINESS_NAME)
+  @javax.annotation.Nullable
+  private String businessName;
 
   public static final String SERIALIZED_NAME_BUSINESS_EMAIL = "businessEmail";
   @SerializedName(SERIALIZED_NAME_BUSINESS_EMAIL)
@@ -147,11 +132,6 @@ public class MerchantOnboardingRequest {
   @javax.annotation.Nullable
   private BusinessTypeEnum businessType;
 
-  public static final String SERIALIZED_NAME_ADDRESS = "address";
-  @SerializedName(SERIALIZED_NAME_ADDRESS)
-  @javax.annotation.Nullable
-  private String address;
-
   public static final String SERIALIZED_NAME_ADDRESS_HE = "addressHe";
   @SerializedName(SERIALIZED_NAME_ADDRESS_HE)
   @javax.annotation.Nullable
@@ -182,72 +162,10 @@ public class MerchantOnboardingRequest {
   @javax.annotation.Nullable
   private Double lng;
 
-  public static final String SERIALIZED_NAME_REQUIRE_EMAIL_CONFIRMATION = "requireEmailConfirmation";
-  @SerializedName(SERIALIZED_NAME_REQUIRE_EMAIL_CONFIRMATION)
-  @javax.annotation.Nullable
-  private Boolean requireEmailConfirmation;
-
-  public MerchantOnboardingRequest() {
+  public MerchantUpdateRequest() {
   }
 
-  public MerchantOnboardingRequest firstName(@javax.annotation.Nonnull String firstName) {
-    this.firstName = firstName;
-    return this;
-  }
-
-  /**
-   * Get firstName
-   * @return firstName
-   */
-  @javax.annotation.Nonnull
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(@javax.annotation.Nonnull String firstName) {
-    this.firstName = firstName;
-  }
-
-
-  public MerchantOnboardingRequest lastName(@javax.annotation.Nonnull String lastName) {
-    this.lastName = lastName;
-    return this;
-  }
-
-  /**
-   * Get lastName
-   * @return lastName
-   */
-  @javax.annotation.Nonnull
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(@javax.annotation.Nonnull String lastName) {
-    this.lastName = lastName;
-  }
-
-
-  public MerchantOnboardingRequest businessName(@javax.annotation.Nonnull String businessName) {
-    this.businessName = businessName;
-    return this;
-  }
-
-  /**
-   * Get businessName
-   * @return businessName
-   */
-  @javax.annotation.Nonnull
-  public String getBusinessName() {
-    return businessName;
-  }
-
-  public void setBusinessName(@javax.annotation.Nonnull String businessName) {
-    this.businessName = businessName;
-  }
-
-
-  public MerchantOnboardingRequest nameHe(@javax.annotation.Nullable String nameHe) {
+  public MerchantUpdateRequest nameHe(@javax.annotation.Nullable String nameHe) {
     this.nameHe = nameHe;
     return this;
   }
@@ -266,7 +184,7 @@ public class MerchantOnboardingRequest {
   }
 
 
-  public MerchantOnboardingRequest nameEn(@javax.annotation.Nullable String nameEn) {
+  public MerchantUpdateRequest nameEn(@javax.annotation.Nullable String nameEn) {
     this.nameEn = nameEn;
     return this;
   }
@@ -285,26 +203,26 @@ public class MerchantOnboardingRequest {
   }
 
 
-  public MerchantOnboardingRequest email(@javax.annotation.Nonnull String email) {
-    this.email = email;
+  public MerchantUpdateRequest businessName(@javax.annotation.Nullable String businessName) {
+    this.businessName = businessName;
     return this;
   }
 
   /**
-   * Get email
-   * @return email
+   * Get businessName
+   * @return businessName
    */
-  @javax.annotation.Nonnull
-  public String getEmail() {
-    return email;
+  @javax.annotation.Nullable
+  public String getBusinessName() {
+    return businessName;
   }
 
-  public void setEmail(@javax.annotation.Nonnull String email) {
-    this.email = email;
+  public void setBusinessName(@javax.annotation.Nullable String businessName) {
+    this.businessName = businessName;
   }
 
 
-  public MerchantOnboardingRequest businessEmail(@javax.annotation.Nullable String businessEmail) {
+  public MerchantUpdateRequest businessEmail(@javax.annotation.Nullable String businessEmail) {
     this.businessEmail = businessEmail;
     return this;
   }
@@ -323,7 +241,7 @@ public class MerchantOnboardingRequest {
   }
 
 
-  public MerchantOnboardingRequest businessPhone(@javax.annotation.Nullable String businessPhone) {
+  public MerchantUpdateRequest businessPhone(@javax.annotation.Nullable String businessPhone) {
     this.businessPhone = businessPhone;
     return this;
   }
@@ -342,7 +260,7 @@ public class MerchantOnboardingRequest {
   }
 
 
-  public MerchantOnboardingRequest businessType(@javax.annotation.Nullable BusinessTypeEnum businessType) {
+  public MerchantUpdateRequest businessType(@javax.annotation.Nullable BusinessTypeEnum businessType) {
     this.businessType = businessType;
     return this;
   }
@@ -361,26 +279,7 @@ public class MerchantOnboardingRequest {
   }
 
 
-  public MerchantOnboardingRequest address(@javax.annotation.Nullable String address) {
-    this.address = address;
-    return this;
-  }
-
-  /**
-   * Get address
-   * @return address
-   */
-  @javax.annotation.Nullable
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(@javax.annotation.Nullable String address) {
-    this.address = address;
-  }
-
-
-  public MerchantOnboardingRequest addressHe(@javax.annotation.Nullable String addressHe) {
+  public MerchantUpdateRequest addressHe(@javax.annotation.Nullable String addressHe) {
     this.addressHe = addressHe;
     return this;
   }
@@ -399,7 +298,7 @@ public class MerchantOnboardingRequest {
   }
 
 
-  public MerchantOnboardingRequest addressEn(@javax.annotation.Nullable String addressEn) {
+  public MerchantUpdateRequest addressEn(@javax.annotation.Nullable String addressEn) {
     this.addressEn = addressEn;
     return this;
   }
@@ -418,7 +317,7 @@ public class MerchantOnboardingRequest {
   }
 
 
-  public MerchantOnboardingRequest cityHe(@javax.annotation.Nullable String cityHe) {
+  public MerchantUpdateRequest cityHe(@javax.annotation.Nullable String cityHe) {
     this.cityHe = cityHe;
     return this;
   }
@@ -437,7 +336,7 @@ public class MerchantOnboardingRequest {
   }
 
 
-  public MerchantOnboardingRequest cityEn(@javax.annotation.Nullable String cityEn) {
+  public MerchantUpdateRequest cityEn(@javax.annotation.Nullable String cityEn) {
     this.cityEn = cityEn;
     return this;
   }
@@ -456,7 +355,7 @@ public class MerchantOnboardingRequest {
   }
 
 
-  public MerchantOnboardingRequest lat(@javax.annotation.Nullable Double lat) {
+  public MerchantUpdateRequest lat(@javax.annotation.Nullable Double lat) {
     this.lat = lat;
     return this;
   }
@@ -475,7 +374,7 @@ public class MerchantOnboardingRequest {
   }
 
 
-  public MerchantOnboardingRequest lng(@javax.annotation.Nullable Double lng) {
+  public MerchantUpdateRequest lng(@javax.annotation.Nullable Double lng) {
     this.lng = lng;
     return this;
   }
@@ -494,25 +393,6 @@ public class MerchantOnboardingRequest {
   }
 
 
-  public MerchantOnboardingRequest requireEmailConfirmation(@javax.annotation.Nullable Boolean requireEmailConfirmation) {
-    this.requireEmailConfirmation = requireEmailConfirmation;
-    return this;
-  }
-
-  /**
-   * Get requireEmailConfirmation
-   * @return requireEmailConfirmation
-   */
-  @javax.annotation.Nullable
-  public Boolean getRequireEmailConfirmation() {
-    return requireEmailConfirmation;
-  }
-
-  public void setRequireEmailConfirmation(@javax.annotation.Nullable Boolean requireEmailConfirmation) {
-    this.requireEmailConfirmation = requireEmailConfirmation;
-  }
-
-
 
   @Override
   public boolean equals(Object o) {
@@ -522,52 +402,42 @@ public class MerchantOnboardingRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MerchantOnboardingRequest merchantOnboardingRequest = (MerchantOnboardingRequest) o;
-    return Objects.equals(this.firstName, merchantOnboardingRequest.firstName) &&
-        Objects.equals(this.lastName, merchantOnboardingRequest.lastName) &&
-        Objects.equals(this.businessName, merchantOnboardingRequest.businessName) &&
-        Objects.equals(this.nameHe, merchantOnboardingRequest.nameHe) &&
-        Objects.equals(this.nameEn, merchantOnboardingRequest.nameEn) &&
-        Objects.equals(this.email, merchantOnboardingRequest.email) &&
-        Objects.equals(this.businessEmail, merchantOnboardingRequest.businessEmail) &&
-        Objects.equals(this.businessPhone, merchantOnboardingRequest.businessPhone) &&
-        Objects.equals(this.businessType, merchantOnboardingRequest.businessType) &&
-        Objects.equals(this.address, merchantOnboardingRequest.address) &&
-        Objects.equals(this.addressHe, merchantOnboardingRequest.addressHe) &&
-        Objects.equals(this.addressEn, merchantOnboardingRequest.addressEn) &&
-        Objects.equals(this.cityHe, merchantOnboardingRequest.cityHe) &&
-        Objects.equals(this.cityEn, merchantOnboardingRequest.cityEn) &&
-        Objects.equals(this.lat, merchantOnboardingRequest.lat) &&
-        Objects.equals(this.lng, merchantOnboardingRequest.lng) &&
-        Objects.equals(this.requireEmailConfirmation, merchantOnboardingRequest.requireEmailConfirmation);
+    MerchantUpdateRequest merchantUpdateRequest = (MerchantUpdateRequest) o;
+    return Objects.equals(this.nameHe, merchantUpdateRequest.nameHe) &&
+        Objects.equals(this.nameEn, merchantUpdateRequest.nameEn) &&
+        Objects.equals(this.businessName, merchantUpdateRequest.businessName) &&
+        Objects.equals(this.businessEmail, merchantUpdateRequest.businessEmail) &&
+        Objects.equals(this.businessPhone, merchantUpdateRequest.businessPhone) &&
+        Objects.equals(this.businessType, merchantUpdateRequest.businessType) &&
+        Objects.equals(this.addressHe, merchantUpdateRequest.addressHe) &&
+        Objects.equals(this.addressEn, merchantUpdateRequest.addressEn) &&
+        Objects.equals(this.cityHe, merchantUpdateRequest.cityHe) &&
+        Objects.equals(this.cityEn, merchantUpdateRequest.cityEn) &&
+        Objects.equals(this.lat, merchantUpdateRequest.lat) &&
+        Objects.equals(this.lng, merchantUpdateRequest.lng);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(firstName, lastName, businessName, nameHe, nameEn, email, businessEmail, businessPhone, businessType, address, addressHe, addressEn, cityHe, cityEn, lat, lng, requireEmailConfirmation);
+    return Objects.hash(nameHe, nameEn, businessName, businessEmail, businessPhone, businessType, addressHe, addressEn, cityHe, cityEn, lat, lng);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class MerchantOnboardingRequest {\n");
-    sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
-    sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
-    sb.append("    businessName: ").append(toIndentedString(businessName)).append("\n");
+    sb.append("class MerchantUpdateRequest {\n");
     sb.append("    nameHe: ").append(toIndentedString(nameHe)).append("\n");
     sb.append("    nameEn: ").append(toIndentedString(nameEn)).append("\n");
-    sb.append("    email: ").append(toIndentedString(email)).append("\n");
+    sb.append("    businessName: ").append(toIndentedString(businessName)).append("\n");
     sb.append("    businessEmail: ").append(toIndentedString(businessEmail)).append("\n");
     sb.append("    businessPhone: ").append(toIndentedString(businessPhone)).append("\n");
     sb.append("    businessType: ").append(toIndentedString(businessType)).append("\n");
-    sb.append("    address: ").append(toIndentedString(address)).append("\n");
     sb.append("    addressHe: ").append(toIndentedString(addressHe)).append("\n");
     sb.append("    addressEn: ").append(toIndentedString(addressEn)).append("\n");
     sb.append("    cityHe: ").append(toIndentedString(cityHe)).append("\n");
     sb.append("    cityEn: ").append(toIndentedString(cityEn)).append("\n");
     sb.append("    lat: ").append(toIndentedString(lat)).append("\n");
     sb.append("    lng: ").append(toIndentedString(lng)).append("\n");
-    sb.append("    requireEmailConfirmation: ").append(toIndentedString(requireEmailConfirmation)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -590,77 +460,52 @@ public class MerchantOnboardingRequest {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("firstName");
-    openapiFields.add("lastName");
-    openapiFields.add("businessName");
     openapiFields.add("nameHe");
     openapiFields.add("nameEn");
-    openapiFields.add("email");
+    openapiFields.add("businessName");
     openapiFields.add("businessEmail");
     openapiFields.add("businessPhone");
     openapiFields.add("businessType");
-    openapiFields.add("address");
     openapiFields.add("addressHe");
     openapiFields.add("addressEn");
     openapiFields.add("cityHe");
     openapiFields.add("cityEn");
     openapiFields.add("lat");
     openapiFields.add("lng");
-    openapiFields.add("requireEmailConfirmation");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("firstName");
-    openapiRequiredFields.add("lastName");
-    openapiRequiredFields.add("businessName");
-    openapiRequiredFields.add("email");
   }
 
   /**
    * Validates the JSON Element and throws an exception if issues found
    *
    * @param jsonElement JSON Element
-   * @throws IOException if the JSON Element is invalid with respect to MerchantOnboardingRequest
+   * @throws IOException if the JSON Element is invalid with respect to MerchantUpdateRequest
    */
   public static void validateJsonElement(JsonElement jsonElement) throws IOException {
       if (jsonElement == null) {
-        if (!MerchantOnboardingRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in MerchantOnboardingRequest is not found in the empty JSON string", MerchantOnboardingRequest.openapiRequiredFields.toString()));
+        if (!MerchantUpdateRequest.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in MerchantUpdateRequest is not found in the empty JSON string", MerchantUpdateRequest.openapiRequiredFields.toString()));
         }
       }
 
       Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
       // check to see if the JSON string contains additional fields
       for (Map.Entry<String, JsonElement> entry : entries) {
-        if (!MerchantOnboardingRequest.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `MerchantOnboardingRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
-        }
-      }
-
-      // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : MerchantOnboardingRequest.openapiRequiredFields) {
-        if (jsonElement.getAsJsonObject().get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonElement.toString()));
+        if (!MerchantUpdateRequest.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `MerchantUpdateRequest` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
         }
       }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
-      if (!jsonObj.get("firstName").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `firstName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("firstName").toString()));
-      }
-      if (!jsonObj.get("lastName").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `lastName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("lastName").toString()));
-      }
-      if (!jsonObj.get("businessName").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `businessName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("businessName").toString()));
-      }
       if ((jsonObj.get("nameHe") != null && !jsonObj.get("nameHe").isJsonNull()) && !jsonObj.get("nameHe").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `nameHe` to be a primitive type in the JSON string but got `%s`", jsonObj.get("nameHe").toString()));
       }
       if ((jsonObj.get("nameEn") != null && !jsonObj.get("nameEn").isJsonNull()) && !jsonObj.get("nameEn").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `nameEn` to be a primitive type in the JSON string but got `%s`", jsonObj.get("nameEn").toString()));
       }
-      if (!jsonObj.get("email").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `email` to be a primitive type in the JSON string but got `%s`", jsonObj.get("email").toString()));
+      if ((jsonObj.get("businessName") != null && !jsonObj.get("businessName").isJsonNull()) && !jsonObj.get("businessName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `businessName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("businessName").toString()));
       }
       if ((jsonObj.get("businessEmail") != null && !jsonObj.get("businessEmail").isJsonNull()) && !jsonObj.get("businessEmail").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `businessEmail` to be a primitive type in the JSON string but got `%s`", jsonObj.get("businessEmail").toString()));
@@ -674,9 +519,6 @@ public class MerchantOnboardingRequest {
       // validate the optional field `businessType`
       if (jsonObj.get("businessType") != null && !jsonObj.get("businessType").isJsonNull()) {
         BusinessTypeEnum.validateJsonElement(jsonObj.get("businessType"));
-      }
-      if ((jsonObj.get("address") != null && !jsonObj.get("address").isJsonNull()) && !jsonObj.get("address").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `address` to be a primitive type in the JSON string but got `%s`", jsonObj.get("address").toString()));
       }
       if ((jsonObj.get("addressHe") != null && !jsonObj.get("addressHe").isJsonNull()) && !jsonObj.get("addressHe").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `addressHe` to be a primitive type in the JSON string but got `%s`", jsonObj.get("addressHe").toString()));
@@ -696,22 +538,22 @@ public class MerchantOnboardingRequest {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!MerchantOnboardingRequest.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'MerchantOnboardingRequest' and its subtypes
+       if (!MerchantUpdateRequest.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'MerchantUpdateRequest' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<MerchantOnboardingRequest> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(MerchantOnboardingRequest.class));
+       final TypeAdapter<MerchantUpdateRequest> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(MerchantUpdateRequest.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<MerchantOnboardingRequest>() {
+       return (TypeAdapter<T>) new TypeAdapter<MerchantUpdateRequest>() {
            @Override
-           public void write(JsonWriter out, MerchantOnboardingRequest value) throws IOException {
+           public void write(JsonWriter out, MerchantUpdateRequest value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              elementAdapter.write(out, obj);
            }
 
            @Override
-           public MerchantOnboardingRequest read(JsonReader in) throws IOException {
+           public MerchantUpdateRequest read(JsonReader in) throws IOException {
              JsonElement jsonElement = elementAdapter.read(in);
              validateJsonElement(jsonElement);
              return thisAdapter.fromJsonTree(jsonElement);
@@ -722,18 +564,18 @@ public class MerchantOnboardingRequest {
   }
 
   /**
-   * Create an instance of MerchantOnboardingRequest given an JSON string
+   * Create an instance of MerchantUpdateRequest given an JSON string
    *
    * @param jsonString JSON string
-   * @return An instance of MerchantOnboardingRequest
-   * @throws IOException if the JSON string is invalid with respect to MerchantOnboardingRequest
+   * @return An instance of MerchantUpdateRequest
+   * @throws IOException if the JSON string is invalid with respect to MerchantUpdateRequest
    */
-  public static MerchantOnboardingRequest fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, MerchantOnboardingRequest.class);
+  public static MerchantUpdateRequest fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, MerchantUpdateRequest.class);
   }
 
   /**
-   * Convert an instance of MerchantOnboardingRequest to an JSON string
+   * Convert an instance of MerchantUpdateRequest to an JSON string
    *
    * @return JSON string
    */
